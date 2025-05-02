@@ -12,8 +12,11 @@ import CalendarPage from './assets/components/calender';
 import Emergency from './assets/components/emergency';
 import Details from './assets/components/details';*/
 
-import HomeWork from "../../server/components/homework";
+import HomeWork from "./components/homework";
+import Home from "./components/home";
+import LoginPage from "./components/login";
 
+import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 
 
 
@@ -28,11 +31,18 @@ function App() {
       ),
     },
     {
+      path: '/login',
+      element: (
+        <>
+          <LoginPage/>
+        </>
+      ),
+    },
+    {
       path: '/',
       element: (
         <>
-        
-          <HomeWork/>
+                  <Home/>
         </>
       ),
     }

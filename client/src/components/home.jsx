@@ -1,5 +1,6 @@
 function Home() {
-    return (<>this is home page</>);
+    return (<>
+    <p>this is home page</p></>);
 }
 
 export default Home;
