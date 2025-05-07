@@ -23,15 +23,9 @@ import CalendarPage from './assets/components/calender';
 import Emergency from './assets/components/emergency';
 
 import Details from './assets/components/details';*/
-
-
-
 import HomeWork from "./components/homework";
-
-import Home from "./components/home";
-
+import Home from "./components/homepage";
 import LoginPage from "./components/login";
-
 
 
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
