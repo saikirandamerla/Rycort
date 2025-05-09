@@ -24,7 +24,7 @@ function LoginPage() {
     }
 
     try {
-      const response = await axios.post('http://localhost:3000/login', {
+      const response = await axios.post('http://localhost:3000/api/login', {
         email,
         password,
       });
@@ -70,7 +70,7 @@ function LoginPage() {
     display: 'flex',
     alignItems: 'center',
     fontWeight: '500',
-    border: '1px solid #007bff', // fixed style property
+    border: '1px solid #007bff',
     padding: '4px 8px',
     borderRadius: '6px',
   };
