@@ -167,4 +167,4 @@ function Dashboard() {
   );
 }
 
-export default homepage;
+export default Dashboard;
