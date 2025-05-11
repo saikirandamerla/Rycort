@@ -4,11 +4,10 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import chemistryImg from '../assets/subject/Chemistry.png';
 import mathsImg from '../assets/subject/Maths.png';
 import physicsImg from '../assets/subject/Physics.png';
- // Add new images as needed
- // Add new images as needed
 import Profile from '../assets/profile.png';
 import Calendar from '../components/Calender';
 import Attadance from '../components/Attadance';
+import welcomeBanner from '../assets/welcome_banner.png';
 
 function Dashboard() {
   const today = new Date();
@@ -30,6 +29,7 @@ function Dashboard() {
   const handleDateClick = (day) => {
     setSelectedDate(new Date(currentDate.getFullYear(), currentDate.getMonth(), day));
   };
+  const [userName, setUserName] = useState("John"); // Replace "John" with a dynamic value if available
 
   const monthNames = [
     "January", "February", "March", "April", "May", "June",
@@ -89,11 +89,6 @@ function Dashboard() {
         <i className="bi bi-bell-fill text-dark" style={{ fontSize: "1.5rem", cursor: "pointer" }}></i>
       </div>
 
-      {/* Search bar */}
-      <div>
-        <input type="text" placeholder="Search" className="form-control w-25" />
-      </div>
-
       {/* 👤 Profile Row */}
       <div className="d-flex justify-content-end mb-3" style={{ marginRight: "40px", marginTop: "10px" }}>
         <div className="d-flex align-items-center p-2" style={{ width: "260px" }}>
@@ -109,15 +104,33 @@ function Dashboard() {
       </div>
       
 
-      {/* 👋 Welcome Back Row */}
-      <div className="row mb-4">
-        <div className="col-md-9">
-          <div className="bg-primary rounded p-3 mb-4 d-flex justify-content-between align-items-center shadow-sm">
-            <div>
-              <h5>Welcome back, Quin</h5>
-              <p className="text-muted small">Always stay updated in your student portal</p>
-            </div>
-          </div>
+{/* 👋 Welcome Back Banner */}
+<div className="row mb-4">
+  <div className="col-12">
+    <div
+      className="rounded p-4 d-flex justify-content-between align-items-center shadow-sm"
+      style={{
+        background: 'linear-gradient(to right, #2196f3, #6ec6ff)',
+        color: 'white',
+        borderRadius: '1rem',
+        minHeight: '150px'
+      }}
+    >
+      <div>
+        <p style={{ fontSize: '0.9rem', marginBottom: '0.5rem' }}>
+          {new Date().toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}
+        </p>
+        <h3 className="fw-bold mb-1">Welcome back, {userName}!</h3>
+        <p className="mb-0">Always stay updated in your student portal</p>
+      </div>
+      <img
+        src={welcomeBanner} // Rename accordingly
+        alt="Welcome Illustration"
+        style={{ maxHeight: '250px', objectFit: 'contain' }}
+      />
+    </div>
+  </div>
+</div>
 
           {/* Diary */}
           <h1 style={{ fontFamily: "Arial, sans-serif", fontWeight: "bold", fontSize: "1.2rem" }}>Dairy</h1>
@@ -162,8 +175,6 @@ function Dashboard() {
             </div>
           </div>
         </div>
-      </div>
-    </div>
   );
 }
 
