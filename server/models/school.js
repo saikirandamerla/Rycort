@@ -1,17 +1,19 @@
-const express=require('express');
-const mongoose=require('mongoose');
+const mongoose = require('mongoose');
 
-const schoolSchema=new mongoose.Schema({
-    schoolName:{
-        type:String,
-        required:true,
-        unique:true
+const schoolSchema = new mongoose.Schema({
+    schoolId: {
+        type: String,
+        unique: true,
     },
-    schoolId:{
-        type:String,
-        required:true,
+    name: {
+        type: String,
+        required: true
     },
-})
-const School=mongoose.model('School',schoolSchema);
+    address: {
+        type: String,
+        required: true
+    }
+});
 
-module.exports=School;
+module.exports = mongoose.model('School', schoolSchema);
+
