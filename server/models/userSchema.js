@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 
+// This schema defines the structure for storing user information, including their email, password, role, and associated school.
 const UserSchema = new mongoose.Schema({
     emailId: {
         type: String,
