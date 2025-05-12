@@ -7,11 +7,11 @@ pnpm-debug.log*
 lerna-debug.log*
 
 # Node modules
-eal/node_modules/
+client/node_modules/
 server/node_modules/
 
 # Environment files
-server/.env
+.env
 
 # Build directories
 dist/

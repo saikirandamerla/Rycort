@@ -7,6 +7,10 @@ import physicsImg from '../assets/subject/Physics.png';
 import Profile from '../assets/profile.png';
 import Calendar from '../components/Calender';
 import Attadance from '../components/Attadance';
+
+import welcomeBanner from '../assets/welcome_banner.png';
+
+
 import Sidebar from "../components/navbar"
 function Dashboard() {
   const today = new Date();
@@ -31,6 +35,7 @@ function Dashboard() {
   const handleDateClick = (day) => {
     setSelectedDate(new Date(currentDate.getFullYear(), currentDate.getMonth(), day));
   };
+  const [userName, setUserName] = useState("John"); // Replace "John" with a dynamic value if available
 
   const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
   const subjectImages = { Chemistry: chemistryImg, Maths: mathsImg, Physics: physicsImg };
@@ -102,6 +107,24 @@ function Dashboard() {
           .circle-inner {
             font-weight: bold;
           }
+
+        `}
+      </style>
+
+      {/* 🔔 Bell Notification Icon */}
+      <div className="position-absolute" style={{ top: "20px", right: "20px", zIndex: 1000 }}>
+        <i className="bi bi-bell-fill text-dark" style={{ fontSize: "1.5rem", cursor: "pointer" }}></i>
+      </div>
+
+      {/* 👤 Profile Row */}
+      <div className="d-flex justify-content-end mb-3" style={{ marginRight: "40px", marginTop: "10px" }}>
+        <div className="d-flex align-items-center p-2" style={{ width: "260px" }}>
+          <img src={Profile} alt="avatar" className="rounded-circle me-3" style={{ width: "50px", height: "50px", objectFit: "cover" }} />
+          <div className="d-flex flex-column">
+            <div className="d-flex align-items-center">
+              <h6 className="mb-0 fw-bold" style={{ fontSize: "1rem" }}>Love Quin</h6>
+              <i className="bi bi-caret-down-fill ms-2"></i>
+
         `}</style>
 
         {/* Top Bar */}
@@ -116,9 +139,39 @@ function Dashboard() {
                 <i className="bi bi-caret-down-fill ms-2"></i>
               </div>
               <p className="text-muted mb-0" style={{ fontSize: "0.85rem" }}>2nd Class</p>
+
             </div>
           </div>
         </div>
+
+
+{/* 👋 Welcome Back Banner */}
+<div className="row mb-4">
+  <div className="col-12">
+    <div
+      className="rounded p-4 d-flex justify-content-between align-items-center shadow-sm"
+      style={{
+        background: 'linear-gradient(to right, #2196f3, #6ec6ff)',
+        color: 'white',
+        borderRadius: '1rem',
+        minHeight: '150px'
+      }}
+    >
+      <div>
+        <p style={{ fontSize: '0.9rem', marginBottom: '0.5rem' }}>
+          {new Date().toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}
+        </p>
+        <h3 className="fw-bold mb-1">Welcome back, {userName}!</h3>
+        <p className="mb-0">Always stay updated in your student portal</p>
+      </div>
+      <img
+        src={welcomeBanner} // Rename accordingly
+        alt="Welcome Illustration"
+        style={{ maxHeight: '250px', objectFit: 'contain' }}
+      />
+    </div>
+  </div>
+</div>
 
         {/* Welcome Message */}
         <div className="bg-primary rounded p-3 mb-4 d-flex justify-content-between align-items-center shadow-sm">
@@ -163,6 +216,7 @@ function Dashboard() {
             <Timetable selectedDate={selectedDate} />
           </div>
         </div>
+
       </div>
     </div>
     </div>
