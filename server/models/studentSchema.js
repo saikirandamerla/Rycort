@@ -15,10 +15,10 @@ const studentSchema = new mongoose.Schema({
         ref:'Class',
         required:true
     },
-    attendance:[{
-        date:{type:Date,required:true},
-        status:{type:Boolean,required:true}
-    }],
+    attendancePercentage: {
+        type: Number,
+        default: 0
+      },
     parentPhoneNumber:{
         type:String,
         required:true
