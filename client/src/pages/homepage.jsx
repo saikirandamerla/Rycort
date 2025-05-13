@@ -10,6 +10,7 @@ import welcomeBanner from '../assets/welcome_banner.png';
 import Sidebar from "../components/navbar";
 import TimeTable from '../components/TimeTable';
 import { BsChevronDown } from 'react-icons/bs';
+import ChatWidget from '../components/ChatWidget'; // 👈 Make sure path is correct
 
 function Homepage() {
   const today = new Date();
@@ -18,6 +19,7 @@ function Homepage() {
   const [showAllSubjects, setShowAllSubjects] = useState(false);
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [showProfileSidebar, setShowProfileSidebar] = useState(false);
+  const [isChatOpen, setIsChatOpen] = useState(false); // 👈 Chat toggle state
 
   const userName = "Love Quin";
 
@@ -26,21 +28,27 @@ function Homepage() {
 
   const toggleSidebar = () => {
     setIsSidebarOpen(prev => {
-      if (!prev) setShowProfileSidebar(false); // Close profile if opening sidebar
+      if (!prev) setShowProfileSidebar(false);
       return !prev;
     });
   };
 
   const toggleProfileSidebar = () => {
     setShowProfileSidebar(prev => {
-      if (!prev) setIsSidebarOpen(false); // Close sidebar if opening profile
+      if (!prev) setIsSidebarOpen(false);
       return !prev;
     });
   };
+
   const handleViewAllClick = () => setShowAllSubjects(!showAllSubjects);
+
+  const toggleChat = () => {
+    setIsChatOpen(!isChatOpen);
+  };
+
   return (
     <div style={{ display: 'flex', height: '100vh', width: '100vw', backgroundColor: 'white' }}>
-      {/* Sidebar with Close Icon */}
+      {/* Sidebar */}
       <div style={{
         width: isSidebarOpen ? '250px' : '0',
         transition: 'width 0.3s',
@@ -53,7 +61,6 @@ function Homepage() {
       }}>
         {isSidebarOpen && (
           <div style={{ position: 'relative', height: '100%' }}>
-            {/* Close Icon */}
             <button
               onClick={toggleSidebar}
               style={{
@@ -71,7 +78,6 @@ function Homepage() {
             >
               &times;
             </button>
-            {/* Sidebar Content */}
             <div style={{ marginTop: '40px' }}>
               <Sidebar isOpen={isSidebarOpen} />
             </div>
@@ -92,18 +98,16 @@ function Homepage() {
           position: 'relative'
         }}
       >
-        {/* Toggle Sidebar Button */}
         <div className="mb-3">
           <button className="btn text-dark" onClick={toggleSidebar}>
             <i className="bi bi-list fs-3"></i>
           </button>
         </div>
-        
-        {/* Notification Icon */}
+
         <div className="position-absolute" style={{ top: "20px", right: "20px", zIndex: 1000 }}>
           <i className="bi bi-bell-fill text-dark" style={{ fontSize: "1.5rem", cursor: "pointer" }}></i>
         </div>
-        {/* Small Profile */}
+
         {!showProfileSidebar && (
           <div
             className="d-flex align-items-center position-absolute"
@@ -123,7 +127,7 @@ function Homepage() {
             <BsChevronDown className="ms-2" />
           </div>
         )}
-        {/* Profile Sidebar */}
+
         {showProfileSidebar && (
           <div className="shadow bg-primary rounded text-white p-4"
             style={{
@@ -159,6 +163,7 @@ function Homepage() {
             </div>
           </div>
         )}
+
         {/* Welcome Banner */}
         <div className="row mb-4">
           <div className="col-12">
@@ -180,7 +185,8 @@ function Homepage() {
             </div>
           </div>
         </div>
-        {/* Diary Section */}
+
+        {/* Subject Cards */}
         <div className="row align-items-end mb-2">
           <div className="col">
             <h1 style={{ fontSize: "1.2rem", fontWeight: "bold" }}>Diary</h1>
@@ -192,7 +198,6 @@ function Homepage() {
           </div>
         </div>
 
-        {/* Subject Cards */}
         <div className="row text-center mb-4">
           {subjects.slice(0, showAllSubjects ? subjects.length : 3).map((subject, index) => (
             <div className="col-3" key={index}>
@@ -202,7 +207,6 @@ function Homepage() {
               </button>
             </div>
           ))}
-          {/* Daily Task Card */}
           <div className="col-3">
             <div className="card shadow-sm d-flex flex-row align-items-center justify-content-between p-3"
               style={{
@@ -235,14 +239,12 @@ function Homepage() {
               />
             </div>
           </div>
-
           <div className="col-12 col-md-4 mb-4 d-flex">
             <div className="flex-fill p-3">
               <h6 className="fw-bold mb-3">Attendance</h6>
               <Attendance selectedDate={selectedDate} />
             </div>
           </div>
-
           <div className="col-12 col-md-4 mb-4 d-flex">
             <div className=" flex-fill p-3">
               <h6 className="fw-bold mb-3">Time Table</h6>
@@ -250,10 +252,39 @@ function Homepage() {
             </div>
           </div>
         </div>
-        {/* Footer */}
+
         <footer className="text-center mt-4">
           <p className="text-muted" style={{ fontSize: "0.8rem" }}>© 2025 Student Portal. All rights reserved.</p>
         </footer>
+
+        {/* Floating Chat Icon and Chat Widget */}
+        <button
+          onClick={toggleChat}
+          style={{
+            position: 'fixed',
+            bottom: '20px',
+            right: '20px',
+            zIndex: 1050,
+            backgroundColor: '#007bff',
+            color: 'white',
+            border: 'none',
+            borderRadius: '50%',
+            width: '60px',
+            height: '60px',
+            boxShadow: '0 4px 8px rgba(0, 0, 0, 0.2)',
+            cursor: 'pointer',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            fontSize: '1.5rem'
+          }}
+          aria-label="Open Chat"
+        >
+          <i className="bi bi-chat-dots-fill"></i>
+        </button>
+
+        {isChatOpen && <ChatWidget onClose={toggleChat} />} {/* 👈 Render widget */}
+
       </div>
     </div>
   );
