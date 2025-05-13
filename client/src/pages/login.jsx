@@ -19,26 +19,40 @@ function LoginPage() {
     e.preventDefault();
 
     if (!email || !password) {
-      setError('Please enter both email and password.');
-      return;
-    }
+    setError('Please enter both email and password.');
+    return;
+  }
 
-    try {
-      const response = await axios.post('http://localhost:3000/api/login', {
-        email,
-        password,
-      });
+  try {
+    const response = await axios.post('http://localhost:3000/api/login', {
+      email,
+      password,
+    });
 
-      if (response.data.success) {
-        navigate('/homepage');
+    if (response.data.success) {
+      const role = response.data.role;
+
+      // Optional: store user info/token/role
+      localStorage.setItem('userRole', role);
+
+      // Navigate based on role
+      if (role === 'student') {
+        navigate('/student-dashboard');
+      } else if (role === 'teacher') {
+        navigate('/teacher-dashboard');
+      } else if (role === 'administrator') {
+        navigate('/admin-dashboard');
       } else {
-        setError(response.data.message || 'Invalide username and password.');
+        setError('Unknown user role.');
       }
-    } catch (err) {
-      console.error(err);
-      setError('Server error. Please try again later.');
+    } else {
+      setError(response.data.message || 'Invalid username and password.');
     }
-  };
+  } catch (err) {
+    console.error(err);
+    setError('Server error. Please try again later.');
+  }
+};
 
   // --- STYLES ---
 

@@ -80,12 +80,13 @@ function Homepage() {
           </div>
 
           {showProfileDropdown && (
-            <div className="shadow-sm bg-white rounded p-3" style={{
+            <div className="shadow-sm bg-primary rounded p-3" style={{
               position: 'absolute',
-              top: '60px',
+              top: '100%',
               right: 0,
               zIndex: 1000,
-              minWidth: '200px'
+              minWidth: '300px',
+              minHeight: '100%',
             }}>
               <p className="mb-1 fw-bold">Love Quin</p>
               <p className="text-muted mb-2">2nd Class</p>
@@ -132,15 +133,15 @@ function Homepage() {
         </div>
 
         {/* Subject Cards */}
-        <div className="row text-center mb-4">
-          {subjects.slice(0, showAllSubjects ? subjects.length : 3).map((subject, index) => (
-            <div className="col-3" key={index}>
-              <div className="card p-3 shadow-sm d-flex align-items-center justify-content-center">
-                <img src={subjectImages[subject]} alt={subject} style={{ width: "80px", height: "80px", objectFit: "contain" }} />
-                <h6 className="mt-3">{subject}</h6>
-              </div>
-            </div>
-          ))}
+       <div className="row text-center mb-4">
+  {subjects.slice(0, showAllSubjects ? subjects.length : 3).map((subject, index) => (
+    <div className="col-3" key={index}>
+      <button className="btn w-100 h-100 py-4 shadow-sm rounded" style={{backgroundColor: "white"}}>
+        <img src={subjectImages[subject]} alt={subject} style={{ width: "50px", height: "50px", objectFit: "contain" }} />
+        <div className="mt-2 fw-bold">{subject}</div>
+      </button>
+    </div>
+  ))}
 
           {/* Daily Task Card */}
           <div className="col-3">
@@ -163,27 +164,39 @@ function Homepage() {
           </div>
         </div>
 
-        {/* Calendar / Attendance / Timetable */}
-        <div className="row">
-          <div className="col-12 col-lg-4 mb-4">
-            <h6 className="fw-bold">Calendar</h6>
-            <Calendar
-              currentDate={currentDate}
-              setCurrentDate={setCurrentDate}
-              selectedDate={selectedDate}
-              setSelectedDate={setSelectedDate}
-            />
-          </div>
-          <div className="col-12 col-lg-4 mb-4">
-            <h6 className="fw-bold">Attendance</h6>
-            <Attendance selectedDate={selectedDate} />
-          </div>
-          <div className="col-12 col-lg-4 mb-4">
-            <h6 className="fw-bold">Time Table</h6>
-            <TimeTable currentDate={currentDate} />
-          </div>
-        </div>
+      <div className="row">
+  {/* Calendar Card */}
+  <div className="col-12 col-md-4 mb-4 d-flex">
+    <div className="flex-fill p-3">
+      <h6 className="fw-bold mb-3">Calendar</h6>
+      <Calendar
+        currentDate={currentDate}
+        setCurrentDate={setCurrentDate}
+        selectedDate={selectedDate}
+        setSelectedDate={setSelectedDate}
+      />
+    </div>
+  </div>
 
+  {/* Attendance Card */}
+  <div className="col-12 col-md-4 mb-4 d-flex">
+    <div className="flex-fill p-3">
+      <h6 className="fw-bold mb-3">Attendance</h6>
+      <Attendance selectedDate={selectedDate} />
+    </div>
+  </div>
+
+  {/* Time Table Card */}
+  <div className="col-12 col-md-4 mb-4 d-flex">
+    <div className=" flex-fill p-3">
+      <h6 className="fw-bold mb-3">Time Table</h6>
+      <TimeTable currentDate={currentDate} />
+    </div>
+  </div>
+</div>
+
+
+        {/* Footer */}
         <footer className="text-center mt-4">
           <p className="text-muted" style={{ fontSize: "0.8rem" }}>© 2025 Student Portal. All rights reserved.</p>
         </footer>
