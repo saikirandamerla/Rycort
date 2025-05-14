@@ -10,6 +10,7 @@ import welcomeBanner from '../assets/welcome_banner.png';
 import Sidebar from "../components/navbar";
 import TimeTable from '../components/TimeTable';
 import { BsChevronDown } from 'react-icons/bs';
+import ChatWidget from '../components/ChatWidget'; // 👈 Make sure path is correct
 
 function Homepage() {
   const today = new Date();
@@ -17,15 +18,33 @@ function Homepage() {
   const [selectedDate, setSelectedDate] = useState(today);
   const [showAllSubjects, setShowAllSubjects] = useState(false);
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
-  const [showProfileDropdown, setShowProfileDropdown] = useState(false);
+  const [showProfileSidebar, setShowProfileSidebar] = useState(false);
+  const [isChatOpen, setIsChatOpen] = useState(false); // 👈 Chat toggle state
 
-  const userName = "John";
+  const userName = "Love Quin";
+
   const subjects = ['Chemistry', 'Maths', 'Physics'];
   const subjectImages = { Chemistry: chemistryImg, Maths: mathsImg, Physics: physicsImg };
 
-  const toggleSidebar = () => setIsSidebarOpen(!isSidebarOpen);
+  const toggleSidebar = () => {
+    setIsSidebarOpen(prev => {
+      if (!prev) setShowProfileSidebar(false);
+      return !prev;
+    });
+  };
+
+  const toggleProfileSidebar = () => {
+    setShowProfileSidebar(prev => {
+      if (!prev) setIsSidebarOpen(false);
+      return !prev;
+    });
+  };
+
   const handleViewAllClick = () => setShowAllSubjects(!showAllSubjects);
-  const toggleDropdown = () => setShowProfileDropdown(!showProfileDropdown);
+
+  const toggleChat = () => {
+    setIsChatOpen(!isChatOpen);
+  };
 
   return (
     <div style={{ display: 'flex', height: '100vh', width: '100vw', backgroundColor: 'white' }}>
@@ -34,17 +53,39 @@ function Homepage() {
         width: isSidebarOpen ? '250px' : '0',
         transition: 'width 0.3s',
         overflow: 'hidden',
-        backgroundColor: 'transparent',
+        backgroundColor: '#fff',
         height: '100vh',
         position: 'fixed',
         zIndex: 999,
-        padding: isSidebarOpen ? '16px' : '0',
-        boxSizing: 'border-box',
+        borderRight: '1px solid #ccc'
       }}>
-        <Sidebar isOpen={isSidebarOpen} />
+        {isSidebarOpen && (
+          <div style={{ position: 'relative', height: '100%' }}>
+            <button
+              onClick={toggleSidebar}
+              style={{
+                position: 'absolute',
+                top: '10px',
+                right: '10px',
+                background: 'transparent',
+                border: 'none',
+                fontSize: '1.8rem',
+                cursor: 'pointer',
+                zIndex: 1001,
+                color: '#333'
+              }}
+              aria-label="Close Sidebar"
+            >
+              &times;
+            </button>
+            <div style={{ marginTop: '40px', }}>
+              <Sidebar isOpen={isSidebarOpen} />
+            </div>
+          </div>
+        )}
       </div>
 
-      {/* Main Content */}
+      {/* Main Dashboard */}
       <div
         className="container-fluid dashboard p-4"
         style={{
@@ -53,49 +94,75 @@ function Homepage() {
           transition: 'margin-left 0.3s',
           width: '100%',
           height: '100vh',
-          overflowY: 'auto'
+          overflowY: 'auto',
+          position: 'relative'
         }}
       >
-        {/* Toggle Sidebar */}
         <div className="mb-3">
           <button className="btn text-dark" onClick={toggleSidebar}>
             <i className="bi bi-list fs-3"></i>
           </button>
         </div>
 
-        {/* Notification Icon */}
         <div className="position-absolute" style={{ top: "20px", right: "20px", zIndex: 1000 }}>
           <i className="bi bi-bell-fill text-dark" style={{ fontSize: "1.5rem", cursor: "pointer" }}></i>
         </div>
 
-        {/* Profile Info with Dropdown */}
-        <div className="d-flex justify-content-end align-items-center mb-3" style={{ marginRight: "40px", position: 'relative' }}>
-          <div className="d-flex align-items-center" onClick={toggleDropdown} style={{ cursor: 'pointer' }}>
-            <img src={Profile} alt="avatar" className="rounded-circle me-2" style={{ width: "50px", height: "50px", objectFit: "cover" }} />
+        {!showProfileSidebar && (
+          <div
+            className="d-flex align-items-center position-absolute"
+            onClick={toggleProfileSidebar}
+            style={{
+              top: "20px",
+              right: "70px",
+              cursor: 'pointer',
+              zIndex: 1001
+            }}
+          >
+            <img src={Profile} alt="avatar" className="rounded-circle me-2" style={{ width: "45px", height: "45px", objectFit: "cover" }} />
             <div>
-              <h6 className="mb-0 fw-bold" style={{ fontSize: "1rem" }}>Love Quin</h6>
-              <p className="text-muted mb-0" style={{ fontSize: "0.85rem" }}>2nd Class</p>
+              <strong style={{ fontSize: "0.9rem" }}>{userName}</strong>
+              <p className="text-muted mb-0" style={{ fontSize: "0.75rem" }}>2nd Class</p>
             </div>
             <BsChevronDown className="ms-2" />
           </div>
+        )}
 
-          {showProfileDropdown && (
-            <div className="shadow-sm bg-white rounded p-3" style={{
+        {showProfileSidebar && (
+          <div className="shadow bg-primary rounded text-white p-4"
+            style={{
               position: 'absolute',
-              top: '60px',
-              right: 0,
+              top: '0',
+              right: '0',
+              width: '300px',
+              height: '100%',
+              background: 'linear-gradient(to bottom, #5dade2, #3498db)',
               zIndex: 1000,
-              minWidth: '200px'
+              transition: 'transform 0.3s ease-in-out'
             }}>
-              <p className="mb-1 fw-bold">Love Quin</p>
-              <p className="text-muted mb-2">2nd Class</p>
-              <hr />
-              <a href="/profile" className="d-block text-decoration-none text-dark mb-2">View Profile</a>
-              <a href="/settings" className="d-block text-decoration-none text-dark mb-2">Settings</a>
-              <a href="/logout" className="d-block text-decoration-none text-danger">Logout</a>
+            <div className="text-center">
+              <img src={Profile} alt="avatar" style={{
+                width: "80px", height: "80px", objectFit: "cover", borderRadius: "20px", marginBottom: "10px"
+              }} />
+              <h5 className="fw-bold mb-1">{userName}</h5>
+              <p className="mb-1">2nd Class</p>
+              <p className="fw-bold">ID: 1824411</p>
             </div>
-          )}
-        </div>
+            <div className="mt-4">
+              <h6 className="text-white mb-2">Daily notice <a href ="#" className="float-end text-white-50">view all</a></h6>
+              <div className="bg-white text-dark rounded p-2 mb-3">
+                <strong>Payment due</strong>
+                <p style={{ fontSize: "0.75rem" }}>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+                <a href="#" style={{ fontSize: "0.75rem", color: "blue" }}>See more</a>
+              </div>
+              <div className="bg-white text-dark rounded p-2">
+                <strong>Exam schedule</strong>
+                <p style={{ fontSize: "0.75rem" }}>Exams start next week. Be prepared.</p>
+                <a href="#" style={{ fontSize: "0.75rem", color: "blue" }}>See more</a>
+              </div>
+            </div>
+          </div>
+        )}
 
         {/* Welcome Banner */}
         <div className="row mb-4">
@@ -119,33 +186,29 @@ function Homepage() {
           </div>
         </div>
 
-        {/* Diary Title + View All */}
+        {/* Subject Cards */}
         <div className="row align-items-end mb-2">
           <div className="col">
             <h1 style={{ fontSize: "1.2rem", fontWeight: "bold" }}>Diary</h1>
           </div>
-          <div className="col fw-bold" style={{ textAlign: "center" }}>
+          <div className="col fw-bold text-center">
             <a href="#" className="text-primary text-decoration-none" onClick={handleViewAllClick}>
               {showAllSubjects ? "View Less" : "View All"}
             </a>
           </div>
         </div>
 
-        {/* Subject Cards */}
         <div className="row text-center mb-4">
           {subjects.slice(0, showAllSubjects ? subjects.length : 3).map((subject, index) => (
             <div className="col-3" key={index}>
-              <div className="card p-3 shadow-sm d-flex align-items-center justify-content-center">
-                <img src={subjectImages[subject]} alt={subject} style={{ width: "80px", height: "80px", objectFit: "contain" }} />
-                <h6 className="mt-3">{subject}</h6>
-              </div>
+              <button className="btn w-100 h-100 py-4 shadow-sm rounded" style={{ backgroundColor: "white" }}>
+                <img src={subjectImages[subject]} alt={subject} style={{ width: "50px", height: "50px", objectFit: "contain" }} />
+                <div className="mt-2 fw-bold">{subject}</div>
+              </button>
             </div>
           ))}
-
-          {/* Daily Task Card */}
           <div className="col-3">
-            <div
-              className="card shadow-sm d-flex flex-row align-items-center justify-content-between p-3"
+            <div className="card shadow-sm d-flex flex-row align-items-center justify-content-between p-3"
               style={{
                 background: 'linear-gradient(to right, #2196f3, #6ec6ff)',
                 color: 'white',
@@ -163,30 +226,65 @@ function Homepage() {
           </div>
         </div>
 
-        {/* Calendar / Attendance / Timetable */}
+        {/* Calendar, Attendance, Time Table */}
         <div className="row">
-          <div className="col-12 col-lg-4 mb-4">
-            <h6 className="fw-bold">Calendar</h6>
-            <Calendar
-              currentDate={currentDate}
-              setCurrentDate={setCurrentDate}
-              selectedDate={selectedDate}
-              setSelectedDate={setSelectedDate}
-            />
+          <div className="col-12 col-md-4 mb-4 d-flex">
+            <div className="flex-fill p-3">
+              <h6 className="fw-bold mb-3">Calendar</h6>
+              <Calendar
+                currentDate={currentDate}
+                setCurrentDate={setCurrentDate}
+                selectedDate={selectedDate}
+                setSelectedDate={setSelectedDate}
+              />
+            </div>
           </div>
-          <div className="col-12 col-lg-4 mb-4">
-            <h6 className="fw-bold">Attendance</h6>
-            <Attendance selectedDate={selectedDate} />
+          <div className="col-12 col-md-4 mb-4 d-flex">
+            <div className="flex-fill p-3">
+              <h6 className="fw-bold mb-3">Attendance</h6>
+              <Attendance selectedDate={selectedDate} />
+            </div>
           </div>
-          <div className="col-12 col-lg-4 mb-4">
-            <h6 className="fw-bold">Time Table</h6>
-            <TimeTable currentDate={currentDate} />
+          <div className="col-12 col-md-4 mb-4 d-flex">
+            <div className=" flex-fill p-3">
+              <h6 className="fw-bold mb-3">Time Table</h6>
+              <TimeTable currentDate={currentDate} />
+            </div>
           </div>
         </div>
 
         <footer className="text-center mt-4">
           <p className="text-muted" style={{ fontSize: "0.8rem" }}>© 2025 Student Portal. All rights reserved.</p>
         </footer>
+
+        {/* Floating Chat Icon and Chat Widget */}
+        <button
+          onClick={toggleChat}
+          style={{
+            position: 'fixed',
+            bottom: '20px',
+            right: '20px',
+            zIndex: 1050,
+            backgroundColor: '#007bff',
+            color: 'white',
+            border: 'none',
+            borderRadius: '50%',
+            width: '60px',
+            height: '60px',
+            boxShadow: '0 4px 8px rgba(0, 0, 0, 0.2)',
+            cursor: 'pointer',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            fontSize: '1.5rem'
+          }}
+          aria-label="Open Chat"
+        >
+          <i className="bi bi-chat-dots-fill"></i>
+        </button>
+
+        {isChatOpen && <ChatWidget onClose={toggleChat} />}
+
       </div>
     </div>
   );
