@@ -30,8 +30,10 @@ app.get('/', (req, res) => {
   res.send('Welcome to the backend server!');
 });
 schooladd=require("./adminaddingpage")
+login=require('../server/components/login')
 app.use('/api/schools', schooladd);
-app.use('api/attendance',require('../server/components/attendence'))
+app.use('/api/attendance',require('../server/components/attendence'))
+app.use('/api/login',login)
 // Server start
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {

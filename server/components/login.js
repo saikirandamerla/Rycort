@@ -1,24 +1,56 @@
 const express = require('express');
 const router = express.Router();
-const bcrypt = require('bcryptjs');
-const User = require('../models/User');
+const User = require('../models/userSchema'); // Adjust this path as per your project structure
 
-// Register new user
-
-// Login
+// POST 
+// POST /
 router.post('/', async (req, res) => {
   const { email, password } = req.body;
 
+  console.log(req.body);
+  if (!email || !password) {
+    return res.json({ success: false, message: 'Please enter both email and password.' });
+  }
+
+  // TEMP: insert fake data for testing (remove this in production)
+ 
+
   try {
-    const user = await User.findOne({ email });
-    if (!user) return res.status(404).json({ message: 'User not found' });
+    const emailTrimmed = email.trim();
+console.log("Email being searched for:", emailTrimmed);
+const user = await User.findOne({ emailId: emailTrimmed });
 
-    const isMatch = await bcrypt.compare(password, user.password);
-    if (!isMatch) return res.status(400).json({ message: 'Invalid credentials' });
+    console.log("hi");
+    console.log("user",user);
+    if (!user) {
+      return res.json({ success: false, message: 'User not found.' });
+    }
 
-    res.status(200).json({ message: 'Login successful', userId: user._id });
+    if (user.password !== password) {
+      return res.json({ success: false, message: 'Invalid credentials.' });
+    }
+   
+    let role = null;
+    console.log(role)
+    const userObj = user.toObject();
+    console.log("isStudent:", typeof userObj.isStudent, userObj.isStudent);
+    console.log("isTeacher:", typeof userObj.isTeacher, userObj.isTeacher);
+    console.log("isAdmin:", typeof userObj.isAdmin, userObj.isAdmin);
+    
+    if (userObj.isStudent)  role = 'student';
+    else if (userObj.isTeacher) role = 'teacher';
+    else if (userObj.isAdmin) role = 'administrator';
+    console.log(role)
+
+    if (!role) {
+      
+      return res.json({ success: false, message: 'User role not defined.' });
+    }
+
+    return res.json({ success: true, role });
   } catch (err) {
-    res.status(500).json({ message: 'Server error' });
+    console.error(err);
+    return res.status(500).json({ success: false, message: 'Server error. Please try again.' });
   }
 });
 
