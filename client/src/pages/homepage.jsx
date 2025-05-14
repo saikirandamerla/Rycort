@@ -78,7 +78,7 @@ function Homepage() {
             >
               &times;
             </button>
-            <div style={{ marginTop: '40px' }}>
+            <div style={{ marginTop: '40px', }}>
               <Sidebar isOpen={isSidebarOpen} />
             </div>
           </div>
@@ -150,15 +150,15 @@ function Homepage() {
             </div>
             <div className="mt-4">
               <h6 className="text-white mb-2">Daily notice <a href ="#" className="float-end text-white-50">view all</a></h6>
-              <div className="bg-primary text-dark rounded p-2 mb-3">
+              <div className="bg-white text-dark rounded p-2 mb-3">
                 <strong>Payment due</strong>
                 <p style={{ fontSize: "0.75rem" }}>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-                <a href="#" style={{ fontSize: "0.75rem", color: "white" }}>See more</a>
+                <a href="#" style={{ fontSize: "0.75rem", color: "blue" }}>See more</a>
               </div>
-              <div className="bg-primary text-dark rounded p-2">
+              <div className="bg-white text-dark rounded p-2">
                 <strong>Exam schedule</strong>
                 <p style={{ fontSize: "0.75rem" }}>Exams start next week. Be prepared.</p>
-                <a href="#" style={{ fontSize: "0.75rem", color: "white" }}>See more</a>
+                <a href="#" style={{ fontSize: "0.75rem", color: "blue" }}>See more</a>
               </div>
             </div>
           </div>
@@ -283,7 +283,7 @@ function Homepage() {
           <i className="bi bi-chat-dots-fill"></i>
         </button>
 
-        {isChatOpen && <ChatWidget onClose={toggleChat} />} {/* 👈 Render widget */}
+        {isChatOpen && <ChatWidget onClose={toggleChat} />}
 
       </div>
     </div>
