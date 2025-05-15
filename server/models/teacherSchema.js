@@ -23,7 +23,12 @@ const teacherSchema = new mongoose.Schema({
     tasks: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Task'
-    }]
+    }],
+    schoolId: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'School',
+        required: true
+    }
 });
 
 module.exports = mongoose.model('Teacher', teacherSchema);
