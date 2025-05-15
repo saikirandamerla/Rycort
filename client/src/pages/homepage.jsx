@@ -202,8 +202,8 @@ function Homepage() {
           {subjects.slice(0, showAllSubjects ? subjects.length : 3).map((subject, index) => (
             <div className="col-3" key={index}>
               <button className="btn w-100 h-100 py-4 shadow-sm rounded" style={{ backgroundColor: "white" }}>
-                <img src={subjectImages[subject]} alt={subject} style={{ width: "50px", height: "50px", objectFit: "contain" }} />
-                <div className="mt-2 fw-bold">{subject}</div>
+                <img src={subjectImages[subject]} alt={subject} style={{ width: "120px", height: "120px", objectFit: "contain" }} />
+                <div className="mt-2 fw-bold" style={{fontFamily: "sora"}}>{subject}</div>
               </button>
             </div>
           ))}
