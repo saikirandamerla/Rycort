@@ -10,7 +10,7 @@ import HelpIcon from '@mui/icons-material/Help';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 function LoginPage() {
-  const [email, setEmail] = useState('');
+  const [identifier, setIdentifier] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const navigate = useNavigate();
@@ -18,21 +18,35 @@ function LoginPage() {
   const handleLogin = async (e) => {
     e.preventDefault();
 
-    if (!email || !password) {
-      setError('Please enter both email and password.');
+    if (!identifier || !password) {
+      setError('Please enter both email/admission number and password.');
       return;
     }
 
     try {
       const response = await axios.post('http://localhost:3000/api/login', {
-        email,
+        identifier,
         password,
       });
 
       if (response.data.success) {
-        navigate('/homepage');
+        const role = response.data.role;
+        const token = response.data.token;
+        // Store token and role
+        localStorage.setItem('userRole', role);
+        localStorage.setItem('token', token);
+        // Redirect based on role
+        if (role === 'student') {
+          navigate('/student-dashboard');
+        } else if (role === 'teacher') {
+          navigate('/teacher-dashboard');
+        } else if (role === 'administrator') {
+          navigate('/admin-dashboard');
+        } else {
+          setError('Unknown user role.');
+        }
       } else {
-        setError(response.data.message || 'Invalide username and password.');
+        setError(response.data.message || 'Invalid credentials.');
       }
     } catch (err) {
       console.error(err);
@@ -172,9 +186,9 @@ function LoginPage() {
           <PersonOutlineIcon style={iconStyle} />
           <input
             type="text"
-            placeholder="Enter your Username"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
+            placeholder="Enter your Email or Admission Number"
+            value={identifier}
+            onChange={(e) => setIdentifier(e.target.value)}
             style={inputStyle}
           />
         </div>

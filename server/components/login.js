@@ -1,27 +1,31 @@
 const express = require('express');
 const router = express.Router();
 const User = require('../models/userSchema'); // Adjust this path as per your project structure
+const Student = require('../models/studentSchema');
+const jwt = require('jsonwebtoken');
+const JWT_SECRET = process.env.JWT_SECRET || 'yoyo123'; // Use env variable in production
 
 // POST 
 // POST /
 router.post('/', async (req, res) => {
-  const { email, password } = req.body;
+  const { identifier, password } = req.body;
 
-  console.log(req.body);
-  if (!email || !password) {
-    return res.json({ success: false, message: 'Please enter both email and password.' });
+  if (!identifier || !password) {
+    return res.json({ success: false, message: 'Please enter both identifier and password.' });
   }
 
-  // TEMP: insert fake data for testing (remove this in production)
- 
-
   try {
-    const emailTrimmed = email.trim();
-console.log("Email being searched for:", emailTrimmed);
-const user = await User.findOne({ emailId: emailTrimmed });
+    let user = await User.findOne({ emailId: identifier.trim() });
 
-    console.log("hi");
-    console.log("user",user);
+    if (!user) {
+      // If not found by email, try admission number in studentSchema
+    
+      const student = await Student.findOne({ admissionNumber: identifier.trim() }).populate('userId');
+      if (student && student.userId) {
+        user = student.userId;
+      }
+    }
+
     if (!user) {
       return res.json({ success: false, message: 'User not found.' });
     }
@@ -29,25 +33,21 @@ const user = await User.findOne({ emailId: emailTrimmed });
     if (user.password !== password) {
       return res.json({ success: false, message: 'Invalid credentials.' });
     }
-   
+
     let role = null;
-    console.log(role)
-    const userObj = user.toObject();
-    console.log("isStudent:", typeof userObj.isStudent, userObj.isStudent);
-    console.log("isTeacher:", typeof userObj.isTeacher, userObj.isTeacher);
-    console.log("isAdmin:", typeof userObj.isAdmin, userObj.isAdmin);
-    
+    const userObj = user.toObject ? user.toObject() : user;
     if (userObj.isStudent)  role = 'student';
     else if (userObj.isTeacher) role = 'teacher';
     else if (userObj.isAdmin) role = 'administrator';
-    console.log(role)
 
     if (!role) {
-      
       return res.json({ success: false, message: 'User role not defined.' });
     }
 
-    return res.json({ success: true, role });
+    // Generate JWT token
+    const token = jwt.sign({ id: user._id, role }, JWT_SECRET, { expiresIn: '1d' });
+
+    return res.json({ success: true, role, token });
   } catch (err) {
     console.error(err);
     return res.status(500).json({ success: false, message: 'Server error. Please try again.' });
