@@ -1,6 +1,51 @@
-import React from 'react';
+import React, { useState } from 'react';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import chemistryImg from '../assets/subject/Chemistry.png';
+import mathsImg from '../assets/subject/Maths.png';
+import physicsImg from '../assets/subject/Physics.png';
+import Profile from '../assets/profile.png';
+import Calendar from '../components/Calender';
+import Attendance from '../components/Attadance';
+import welcomeBanner from '../assets/welcome_banner.png';
+import Sidebar from "../components/navbar";
+import TimeTable from '../components/TimeTable';
+import { BsChevronDown } from 'react-icons/bs';
+import ChatWidget from '../components/ChatWidget'; // 👈 Make sure path is correct
 
-function HomePage() {
+function StudentDashboard() {
+  const today = new Date();
+  const [currentDate, setCurrentDate] = useState(today);
+  const [selectedDate, setSelectedDate] = useState(today);
+  const [showAllSubjects, setShowAllSubjects] = useState(false);
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const [showProfileSidebar, setShowProfileSidebar] = useState(false);
+  const [isChatOpen, setIsChatOpen] = useState(false); // 👈 Chat toggle state
+
+  const userName = "Love Quin";
+
+  const subjects = ['Chemistry', 'Maths', 'Physics'];
+  const subjectImages = { Chemistry: chemistryImg, Maths: mathsImg, Physics: physicsImg };
+
+  const toggleSidebar = () => {
+    setIsSidebarOpen(prev => {
+      if (!prev) setShowProfileSidebar(false);
+      return !prev;
+    });
+  };
+
+  const toggleProfileSidebar = () => {
+    setShowProfileSidebar(prev => {
+      if (!prev) setIsSidebarOpen(false);
+      return !prev;
+    });
+  };
+
+  const handleViewAllClick = () => setShowAllSubjects(!showAllSubjects);
+
+  const toggleChat = () => {
+    setIsChatOpen(!isChatOpen);
+  };
+
   return (
     <div style={{ display: 'flex', height: '100vh', width: '100vw', backgroundColor: 'white' }}>
       {/* Sidebar */}
@@ -157,8 +202,8 @@ function HomePage() {
           {subjects.slice(0, showAllSubjects ? subjects.length : 3).map((subject, index) => (
             <div className="col-3" key={index}>
               <button className="btn w-100 h-100 py-4 shadow-sm rounded" style={{ backgroundColor: "white" }}>
-                <img src={subjectImages[subject]} alt={subject} style={{ width: "120px", height: "120px", objectFit: "contain" }} />
-                <div className="mt-2 fw-bold" style={{fontFamily: "sora"}}>{subject}</div>
+                <img src={subjectImages[subject]} alt={subject} style={{ width: "50px", height: "50px", objectFit: "contain" }} />
+                <div className="mt-2 fw-bold">{subject}</div>
               </button>
             </div>
           ))}
@@ -241,11 +286,9 @@ function HomePage() {
         {isChatOpen && <ChatWidget onClose={toggleChat} />}
 
       </div>
-    <div style={{ padding: '2rem' }}>
-      <h1>this is home page</h1>
-      <p>Welcome to your dashboard! Here you can view your attendance, marks, timetable, and more.</p>
     </div>
   );
 }
 
-export default HomePage;
+export default StudentDashboard;
+
