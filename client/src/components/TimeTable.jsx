@@ -5,19 +5,12 @@ const Timetable = ({ selectedDate }) => {
 
   const schedule = {
     Sunday: [],
-    Monday: [
-      "Tamil", "English", { type: "break", label: "Break" }, "Math", "Science",
-      { type: "lunch", label: "Lunch" }, "Social", "CS",
-      { type: "break", label: "Break" }, "Tamil", "English"
-    ],
-    Tuesday: [
-      "English", "Math", { type: "break", label: "Break" }, "CS", "Science",
-      { type: "lunch", label: "Lunch" }, "Tamil", "Social"
-    ],
-    Wednesday: ["Math", "Science", { type: "lunch", label: "Lunch" }, "English"],
-    Thursday: ["CS", "Science", { type: "break", label: "Break" }, "Tamil"],
-    Friday: ["English", "Math", "Social", { type: "lunch", label: "Lunch" }],
-    Saturday: ["Drawing", "Library"]
+    Monday: ["Telugu","hindi","English","Math","Science","Social"],
+    Tuesday: ["Telugu","hindi","English","Math","Science","Social"],
+    Wednesday: ["Telugu","hindi","English","Math","Science","Social"],
+    Thursday: ["Telugu","hindi","English","Math","Science","Social"],
+    Friday: ["Telugu","hindi","English","Math","Science","Social"],
+    Saturday: ["Telugu","hindi","English","Math","Science","Social"],
   };
 
   const changeDay = (direction) => {

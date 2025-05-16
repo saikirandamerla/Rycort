@@ -10,12 +10,12 @@ function App() {
 
   const router = createBrowserRouter([
     {
-      path: '/login',
-      element: <LoginPage/>,
+      path: '/homepage',
+      element: <Home/>,
     },
     {
-      path: '/',
-      element: <Home/>,
+      path: '/login',
+      element: <LoginPage/>,
     },
     {
       path: '/student-dashboard',
