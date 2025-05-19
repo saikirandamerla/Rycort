@@ -1,64 +1,53 @@
-import React from 'react';
+// HomePage.jsx
+import React, { useState } from 'react';
+import Sidebar from '../components/navbar'; // Make sure this is the Sidebar you finalized
+import Calendar from '../components/Calender';
+import Attendance from '../components/Attadance';
+import TimeTable from '../components/TimeTable';
+import ChatWidget from '../components/ChatWidget';
+import Profile from '../assets/profile.png';
+import welcomeBanner from '../assets/welcome_banner.png';
+import { BsChevronDown } from 'react-icons/bs';
 
 function HomePage() {
+  const [isSidebarOpen, setIsSidebarOpen] = useState(true);
+  const [showProfileSidebar, setShowProfileSidebar] = useState(false);
+  const [isChatOpen, setIsChatOpen] = useState(false);
+  const [showAllSubjects, setShowAllSubjects] = useState(false);
+  const [currentDate, setCurrentDate] = useState(new Date());
+  const [selectedDate, setSelectedDate] = useState(new Date());
+
+  const userName = "John Doe";
+
+  const subjects = ['Math', 'Science', 'English', 'Social', 'Computer'];
+  const subjectImages = {
+    Math: 'https://via.placeholder.com/120?text=Math',
+    Science: 'https://via.placeholder.com/120?text=Science',
+    English: 'https://via.placeholder.com/120?text=English',
+    Social: 'https://via.placeholder.com/120?text=Social',
+    Computer: 'https://via.placeholder.com/120?text=Computer',
+  };
+
   return (
-    <div style={{ display: 'flex', height: '100vh', width: '100vw', backgroundColor: 'white' }}>
+    <div style={{ display: 'flex', width: '100%', height: '100vh', overflow: 'hidden' }}>
       {/* Sidebar */}
-      <div style={{
-        width: isSidebarOpen ? '250px' : '0',
-        transition: 'width 0.3s',
-        overflow: 'hidden',
-        backgroundColor: '#fff',
-        height: '100vh',
-        position: 'fixed',
-        zIndex: 999,
-        borderRight: '1px solid #ccc'
-      }}>
-        {isSidebarOpen && (
-          <div style={{ position: 'relative', height: '100%' }}>
-            <button
-              onClick={toggleSidebar}
-              style={{
-                position: 'absolute',
-                top: '10px',
-                right: '10px',
-                background: 'transparent',
-                border: 'none',
-                fontSize: '1.8rem',
-                cursor: 'pointer',
-                zIndex: 1001,
-                color: '#333'
-              }}
-              aria-label="Close Sidebar"
-            >
-              &times;
-            </button>
-            <div style={{ marginTop: '40px', }}>
-              <Sidebar isOpen={isSidebarOpen} />
-            </div>
-          </div>
-        )}
-      </div>
+      <Sidebar isOpen={isSidebarOpen} onClose={() => setIsSidebarOpen(!isSidebarOpen)} />
 
       {/* Main Dashboard */}
       <div
         className="container-fluid dashboard p-4"
         style={{
           backgroundColor: '#f5faff',
-          marginLeft: isSidebarOpen ? '250px' : '0',
+          marginLeft: isSidebarOpen ? '250px' : '80px',
           transition: 'margin-left 0.3s',
           width: '100%',
-          height: '100vh',
           overflowY: 'auto',
-          position: 'relative'
+          overflowX: 'hidden',
+          height: '100vh',
+          position: 'relative',
         }}
       >
-        <div className="mb-3">
-          <button className="btn text-dark" onClick={toggleSidebar}>
-            <i className="bi bi-list fs-3"></i>
-          </button>
-        </div>
-
+        {/* Top Icons */}
         <div className="position-absolute" style={{ top: "20px", right: "20px", zIndex: 1000 }}>
           <i className="bi bi-bell-fill text-dark" style={{ fontSize: "1.5rem", cursor: "pointer" }}></i>
         </div>
@@ -66,7 +55,7 @@ function HomePage() {
         {!showProfileSidebar && (
           <div
             className="d-flex align-items-center position-absolute"
-            onClick={toggleProfileSidebar}
+            onClick={() => setShowProfileSidebar(!showProfileSidebar)}
             style={{
               top: "20px",
               right: "70px",
@@ -74,7 +63,7 @@ function HomePage() {
               zIndex: 1001
             }}
           >
-            <img src={Profile} alt="avatar" className="rounded-circle me-2" style={{ width: "45px", height: "45px", objectFit: "cover" }} />
+            <img src={Profile} alt="Profile avatar" className="rounded-circle me-2" style={{ width: "45px", height: "45px", objectFit: "cover" }} />
             <div>
               <strong style={{ fontSize: "0.9rem" }}>{userName}</strong>
               <p className="text-muted mb-0" style={{ fontSize: "0.75rem" }}>2nd Class</p>
@@ -107,12 +96,12 @@ function HomePage() {
               <h6 className="text-white mb-2">Daily notice <a href ="#" className="float-end text-white-50">view all</a></h6>
               <div className="bg-white text-dark rounded p-2 mb-3">
                 <strong>Payment due</strong>
-                <p style={{ fontSize: "0.75rem" }}>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+                <p style={{ fontSize: "0.75rem" }}>Lorem ipsum dolor sit amet.</p>
                 <a href="#" style={{ fontSize: "0.75rem", color: "blue" }}>See more</a>
               </div>
               <div className="bg-white text-dark rounded p-2">
                 <strong>Exam schedule</strong>
-                <p style={{ fontSize: "0.75rem" }}>Exams start next week. Be prepared.</p>
+                <p style={{ fontSize: "0.75rem" }}>Exams start next week.</p>
                 <a href="#" style={{ fontSize: "0.75rem", color: "blue" }}>See more</a>
               </div>
             </div>
@@ -122,7 +111,7 @@ function HomePage() {
         {/* Welcome Banner */}
         <div className="row mb-4">
           <div className="col-12">
-            <div className="rounded p-4 d-flex justify-content-between align-items-center shadow-sm"
+            <div className="rounded p-4 d-flex flex-wrap justify-content-between align-items-center shadow-sm"
               style={{
                 background: 'linear-gradient(to right, #2196f3, #6ec6ff)',
                 color: 'white',
@@ -133,7 +122,7 @@ function HomePage() {
                 <p style={{ fontSize: '0.9rem', marginBottom: '0.5rem' }}>
                   {new Date().toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}
                 </p>
-                <h3 className="fw-bold mb-1" style={{ fontSize: "55px" }}>Welcome back, {userName}!</h3>
+                <h3 className="fw-bold mb-1" style={{ fontSize: "2rem" }}>Welcome back, {userName}!</h3>
                 <p className="mb-0" style={{ fontSize: "15px" }}>Always stay updated in your student portal</p>
               </div>
               <img src={welcomeBanner} alt="Welcome Illustration" style={{ maxHeight: '250px', objectFit: 'contain' }} />
@@ -141,28 +130,28 @@ function HomePage() {
           </div>
         </div>
 
-        {/* Subject Cards */}
+        {/* Diary Section */}
         <div className="row align-items-end mb-2">
           <div className="col">
             <h1 style={{ fontSize: "1.2rem", fontWeight: "bold" }}>Diary</h1>
           </div>
           <div className="col fw-bold text-center">
-            <a href="#" className="text-primary text-decoration-none" onClick={handleViewAllClick}>
+            <a href="#" className="text-primary text-decoration-none" onClick={() => setShowAllSubjects(!showAllSubjects)}>
               {showAllSubjects ? "View Less" : "View All"}
             </a>
           </div>
         </div>
 
-        <div className="row text-center mb-4">
+        <div className="row text-center mb-4 g-3">
           {subjects.slice(0, showAllSubjects ? subjects.length : 3).map((subject, index) => (
-            <div className="col-3" key={index}>
-              <button className="btn w-100 h-100 py-4 shadow-sm rounded" style={{ backgroundColor: "white" }}>
-                <img src={subjectImages[subject]} alt={subject} style={{ width: "120px", height: "120px", objectFit: "contain" }} />
-                <div className="mt-2 fw-bold" style={{fontFamily: "sora"}}>{subject}</div>
+            <div className="col-6 col-md-4 col-lg-3" key={index}>
+              <button className="btn w-100 py-4 shadow-sm rounded" style={{ backgroundColor: "white" }}>
+                <img src={subjectImages[subject]} alt={subject} style={{ width: "100px", height: "100px", objectFit: "contain" }} />
+                <div className="mt-2 fw-bold">{subject}</div>
               </button>
             </div>
           ))}
-          <div className="col-3">
+          <div className="col-6 col-md-4 col-lg-3">
             <div className="card shadow-sm d-flex flex-row align-items-center justify-content-between p-3"
               style={{
                 background: 'linear-gradient(to right, #2196f3, #6ec6ff)',
@@ -201,7 +190,7 @@ function HomePage() {
             </div>
           </div>
           <div className="col-12 col-md-4 mb-4 d-flex">
-            <div className=" flex-fill p-3">
+            <div className="flex-fill p-3">
               <h6 className="fw-bold mb-3">Time Table</h6>
               <TimeTable currentDate={currentDate} />
             </div>
@@ -212,8 +201,8 @@ function HomePage() {
           <p className="text-muted" style={{ fontSize: "0.8rem" }}>© 2025 Student Portal. All rights reserved.</p>
         </footer>
 
-        {/* Floating Chat Icon and Chat Widget */}
-        <button
+        {/* Chat Widget Button */}
+        {/* <button
           onClick={toggleChat}
           style={{
             position: 'fixed',
@@ -236,14 +225,10 @@ function HomePage() {
           aria-label="Open Chat"
         >
           <i className="bi bi-chat-dots-fill"></i>
-        </button>
+        </button> */}
 
         {isChatOpen && <ChatWidget onClose={toggleChat} />}
-
       </div>
-    <div style={{ padding: '2rem' }}>
-      <h1>this is home page</h1>
-      <p>Welcome to your dashboard! Here you can view your attendance, marks, timetable, and more.</p>
     </div>
   );
 }
