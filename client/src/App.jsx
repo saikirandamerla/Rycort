@@ -1,43 +1,54 @@
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 
-import Home from "./pages/homepage";
+import HomePage from "./pages/homepage";
 import LoginPage from "./pages/login";
 import StudentDashboard from "./pages/student-dashboard";
 import TeacherDashboard from "./pages/teacher-dashboard";
 import AdminDashboard from "./pages/admin-dashboard";
+import AttadancePage from "./pages/AttadancePage";
+import SubjectPage from "./pages/SubjectPage";
+import TeacherInfo from "./pages/Teacher-info";
+
 
 function App() {
-
   const router = createBrowserRouter([
     {
-      path: '/login',
-      element: <LoginPage/>,
+      path: '/',
+      element: <HomePage/>,
     },
     {
-      path: '/',
-      element: <Home/>,
+      path: '/login',
+      element: <LoginPage />,
     },
     {
       path: '/student-dashboard',
-      element: <StudentDashboard/>,
+      element: <StudentDashboard />,
     },
-    { 
+   {
+  path: '/Teacher-info',
+  element: <TeacherInfo />,
+},
+
+    {
       path: '/teacher-dashboard',
-      element: <TeacherDashboard/>,
+      element: <TeacherDashboard />,
     },
     {
       path: '/admin-dashboard',
-      element: <AdminDashboard/>,
+      element: <AdminDashboard />,
     },
+    {
+      path: '/attendance',
+      element: <AttadancePage />,
+    },
+,
   ]);
 
   return (
-    <>
-      <div>
-        <RouterProvider router={router}/>
-      </div>
-    </>
-  )
+    <div>
+      <RouterProvider router={router} />
+    </div>
+  );
 }
 
 export default App;

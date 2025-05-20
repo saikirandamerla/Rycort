@@ -1,19 +1,15 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
-
 const Sidebar = ({ isOpen, onClose }) => {
   const menuItems = [
-    { icon: "bi-grid", label: "Dashboard", path: "/homepage" },
-    { icon: "bi-calendar-check", label: "Attendance", path: "/attendance" },
-    { icon: "bi-calendar3", label: "Exam schedule", path: "/exam-schedule" },
-    { icon: "bi-ticket", label: "Hall ticket", path: "/hall-ticket" },
-    { icon: "bi-award", label: "Result", path: "/result" },
-    { icon: "bi-journal", label: "Dairy", path: "/dairy" },
-    { icon: "bi-chat-left-quote", label: "Remarks", path: "/remarks" },
-    { icon: "bi-files", label: "Work sheets", path: "/worksheets" },
-    { icon: "bi-currency-rupee", label: "Payment info", path: "/payment-info" },
-    { icon: "bi-calendar-event", label: "School Leave", path: "/school-leave" },
-    { icon: "bi-chat-text", label: "Chat with teacher", path: "/chat" },
+ { icon: "bi-speedometer2", label: "Dashboard", path: "/" },              // Dashboard icon
+  { icon: "bi-calendar-check", label: "Attendance", path: "/attendance" },         // Attendance check
+  { icon: "bi-journal-text", label: "Examination", path: "/examination" },         // Exam-related journal
+  { icon: "bi-bar-chart-line", label: "Result", path: "/result" },                 // Result bar chart
+  { icon: "bi-book", label: "Dairy", path: "/dairy" },                              // Diary/book icon
+  { icon: "bi-person-lines-fill", label: "Teacher info", path: "/Teacher-info" },  // Info/person icon
+  { icon: "bi-cash-stack", label: "Payment info", path: "/payment-info" },         // Stack of cash
+  { icon: "bi-chat-dots", label: "Chat with teacher", path: "/chat" },             // Chat bubble with dots
   ];
 
   return (
