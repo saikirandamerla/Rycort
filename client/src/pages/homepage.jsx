@@ -29,6 +29,11 @@ function HomePage() {
   };
 
   return (
+
+     <div style={{ padding: '2rem' }}>
+      <h1>Welcome to Home Page</h1>
+      <p>Welcome to your dashboard! Here you can manage schools, users, and system settings.</p>
+
     <div style={{ display: 'flex', width: '100%', height: '100vh', overflow: 'hidden' }}>
       {/* Sidebar */}
       <Sidebar isOpen={isSidebarOpen} onClose={() => setIsSidebarOpen(!isSidebarOpen)} />
