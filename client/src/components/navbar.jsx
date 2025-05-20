@@ -55,7 +55,7 @@ const Sidebar = ({ isOpen, onClose }) => {
       </div>
 
       {/* Menu Items */}
-      <ul className="nav nav-pills flex-column mb-auto" style={{ flexGrow: 1 }}>
+      <ul className="nav nav-pills flex-column mb-auto" style={{ flexGrow: 1, paddingTop: "20px" }}>
         {menuItems.map((item, idx) => (
           <li className="nav-item mb-2" key={idx}>
             <NavLink
@@ -70,8 +70,8 @@ const Sidebar = ({ isOpen, onClose }) => {
         ))}
       </ul>
 
-      {/* Footer Section */}
-      <div className="footer d-flex flex-column mt-auto" style={{ paddingBottom: "20px" }}>
+      {/* Footer Section - Pushed Up a Little */}
+      <div className="footer d-flex flex-column" style={{ marginTop: "auto" }}>
         {/* Chat with Teacher */}
         <div>
           <NavLink
@@ -85,7 +85,7 @@ const Sidebar = ({ isOpen, onClose }) => {
         </div>
 
         {/* Logout */}
-        <div>
+        <div style={{ paddingBottom: "20px" }}>
           <NavLink
             to="/logout"
             className="nav-link text-white d-flex align-items-center"
