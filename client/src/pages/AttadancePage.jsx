@@ -48,6 +48,12 @@ const CombinedDashboardPage = () => {
     background: linear-gradient(to bottom, #d6e9f9, #f3f9ff); /* Updated to a more visible soft blue gradient */
     border-radius: 12px;
   }
+   .dashboard-border {
+      border: 2px solid #d0d7de;
+      border-radius: 16px;
+      padding: 24px;
+      background-color: #ffffff;
+    }
 
   .stat-card {
     display: flex;
@@ -122,8 +128,7 @@ const CombinedDashboardPage = () => {
     border-radius: 10px;
   }
 `}</style>
-
-
+      <div className="dashboard-border mb-4">
       <div className="banner d-flex justify-content-between align-items-center mb-4">
         <div>
           <div className="small">{formattedDate}</div>
@@ -230,6 +235,7 @@ const CombinedDashboardPage = () => {
           </div>
         </div>
       </div>
+    </div>
     </div>
   );
 };
