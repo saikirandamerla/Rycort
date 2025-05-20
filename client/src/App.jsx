@@ -1,6 +1,6 @@
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 
-import HomePage from "./pages/homepage";
+
 import LoginPage from "./pages/login";
 import StudentDashboard from "./pages/student-dashboard";
 import TeacherDashboard from "./pages/teacher-dashboard";
@@ -8,16 +8,13 @@ import AdminDashboard from "./pages/admin-dashboard";
 import AttadancePage from "./pages/AttadancePage";
 import SubjectPage from "./pages/SubjectPage";
 import TeacherInfo from "./pages/Teacher-info";
+import ChatUI from './pages/Chat';
 
 
 function App() {
   const router = createBrowserRouter([
     {
       path: '/',
-      element: <HomePage/>,
-    },
-    {
-      path: '/login',
       element: <LoginPage />,
     },
     {
@@ -41,7 +38,10 @@ function App() {
       path: '/attendance',
       element: <AttadancePage />,
     },
-,
+    {
+      path: '/chat',
+      element: <ChatUI />,
+    },
   ]);
 
   return (

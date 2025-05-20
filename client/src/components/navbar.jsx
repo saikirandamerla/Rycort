@@ -2,7 +2,7 @@ import React from "react";
 import { NavLink } from "react-router-dom";
 const Sidebar = ({ isOpen, onClose }) => {
   const menuItems = [
- { icon: "bi-speedometer2", label: "Dashboard", path: "/" },              // Dashboard icon
+ { icon: "bi-speedometer2", label: "Dashboard", path: "/student-dashboard" },              // Dashboard icon
   { icon: "bi-calendar-check", label: "Attendance", path: "/attendance" },         // Attendance check
   { icon: "bi-journal-text", label: "Examination", path: "/examination" },         // Exam-related journal
   { icon: "bi-bar-chart-line", label: "Result", path: "/result" },                 // Result bar chart
@@ -21,7 +21,7 @@ const Sidebar = ({ isOpen, onClose }) => {
         transition: "transform 0.3s ease-in-out",
         zIndex: 1050,
         padding: "16px",
-        backgroundColor: "white",
+        backgroundColor: "linear-gradient(to bottom, #74b9ff, #0984e3)",
         borderRadius: "16px",
         height: "100%",
       }}
@@ -59,7 +59,7 @@ const Sidebar = ({ isOpen, onClose }) => {
 
         <div className="mt-auto pt-4 border-top">
           <NavLink
-            to="/logout"
+            to="/"
             className="nav-link text-white d-flex align-items-center"
             onClick={onClose}
           >
