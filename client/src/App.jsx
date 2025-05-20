@@ -5,6 +5,7 @@ import LoginPage from "./pages/login";
 import StudentDashboard from "./pages/student-dashboard";
 import TeacherDashboard from "./pages/teacher-dashboard";
 import AdminDashboard from "./pages/admin-dashboard";
+import DailyTask from './pages/dailyTask';
 
 function App() {
 
@@ -15,7 +16,7 @@ function App() {
     },
     {
       path: '/',
-      element: <Home/>,
+      element: <StudentDashboard/>,
     },
     {
       path: '/student-dashboard',
@@ -29,6 +30,10 @@ function App() {
       path: '/admin-dashboard',
       element: <AdminDashboard/>,
     },
+    {
+      path: '/dailytask',
+      element: <DailyTask/>
+    }
   ]);
 
   return (
