@@ -26,6 +26,7 @@ const Sidebar = ({ isOpen, onClose }) => {
         height: "100%",
       }}
     >
+
       <div
         className="d-flex flex-column bg-primary text-white p-3 h-100"
         style={{
@@ -37,10 +38,62 @@ const Sidebar = ({ isOpen, onClose }) => {
           <div
             className="bg-white bg-opacity-25 p-3 rounded-circle d-inline-block"
             style={{ width: "60px", height: "60px" }}
+      {/* Toggle Button */}
+      <div className="text-end px-2">
+        <button
+          className="btn text-white"
+          onClick={onClose}
+          style={{
+            background: "transparent",
+            border: "none",
+            fontSize: "1.2rem",
+            cursor: "pointer",
+          }}
+        >
+          {isOpen ? <i className="bi bi-x-lg"></i> : <i className="bi bi-chevron-right"></i>}
+        </button>
+      </div>
+
+      {/* Logo */}
+      <div className="text-center mb-4">
+        <div
+          className="bg-white bg-opacity-25 p-3 rounded-circle d-inline-block"
+          style={{ width: "60px", height: "60px" }}
+        >
+          <i className="bi bi-mortarboard-fill fs-3 text-white"></i>
+        </div>
+      </div>
+
+      {/* Menu Items */}
+      <ul className="nav nav-pills flex-column mb-auto" style={{ flexGrow: 1, paddingTop: "20px" }}>
+        {menuItems.map((item, idx) => (
+          <li className="nav-item mb-2" key={idx}>
+            <NavLink
+              to={item.path}
+              className="nav-link text-white d-flex align-items-center"
+              onClick={onClose}
+            >
+              <i className={`bi ${item.icon} me-2 fs-5`}></i>
+              {isOpen && <span>{item.label}</span>} {/* Show label only if sidebar is expanded */}
+            </NavLink>
+          </li>
+        ))}
+      </ul>
+
+      {/* Footer Section - Pushed Up a Little */}
+      <div className="footer d-flex flex-column" style={{ marginTop: "auto" }}>
+        {/* Chat with Teacher */}
+        <div>
+          <NavLink
+            to="/chat"
+            className="nav-link text-white d-flex align-items-center"
+            onClick={onClose}
+
           >
             <i className="bi bi-mortarboard-fill fs-3 text-white"></i>
           </div>
         </div>
+
 
         <ul className="nav nav-pills flex-column mb-auto">
           {menuItems.map((item, idx) => (
@@ -58,6 +111,10 @@ const Sidebar = ({ isOpen, onClose }) => {
         </ul>
 
         <div className="mt-auto pt-4 border-top">
+
+        {/* Logout */}
+        <div style={{ paddingBottom: "20px" }}>
+
           <NavLink
             to="/"
             className="nav-link text-white d-flex align-items-center"
