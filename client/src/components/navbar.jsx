@@ -2,7 +2,7 @@ import React from "react";
 import { NavLink } from "react-router-dom";
 const Sidebar = ({ isOpen, onClose }) => {
   const menuItems = [
- { icon: "bi-speedometer2", label: "Dashboard", path: "/student-dashboard" },              // Dashboard icon
+ { icon: "bi-speedometer2", label: "Dashboard", path: "/" },              // Dashboard icon
   { icon: "bi-calendar-check", label: "Attendance", path: "/attendance" },         // Attendance check
   { icon: "bi-journal-text", label: "Examination", path: "/examination" },         // Exam-related journal
   { icon: "bi-bar-chart-line", label: "Result", path: "/result" },                 // Result bar chart
@@ -14,30 +14,20 @@ const Sidebar = ({ isOpen, onClose }) => {
 
   return (
     <div
-      className="position-fixed top-0 start-0 h-100"
+      className="sidebar d-flex flex-column text-white"
       style={{
-        width: "250px",
-        transform: isOpen ? "translateX(0)" : "translateX(-100%)",
-        transition: "transform 0.3s ease-in-out",
-        zIndex: 1050,
-        padding: "16px",
-        backgroundColor: "linear-gradient(to bottom, #74b9ff, #0984e3)",
-        borderRadius: "16px",
-        height: "100%",
+        position: "fixed",
+        top: 0,
+        left: 0,
+        height: "100vh",
+        width: isOpen ? "250px" : "80px",
+        background: "linear-gradient(to bottom, #74b9ff, #0984e3)",
+        transition: "width 0.3s ease",
+        zIndex: 100,
+        padding: "1rem 0.5rem",
+        overflow: "hidden", // Prevent scrolling within the sidebar
       }}
     >
-
-      <div
-        className="d-flex flex-column bg-primary text-white p-3 h-100"
-        style={{
-          background: "linear-gradient(to bottom, #74b9ff, #0984e3)",
-          borderRadius: "1rem",
-        }}
-      >
-        <div className="text-center mb-4">
-          <div
-            className="bg-white bg-opacity-25 p-3 rounded-circle d-inline-block"
-            style={{ width: "60px", height: "60px" }}
       {/* Toggle Button */}
       <div className="text-end px-2">
         <button
@@ -88,40 +78,21 @@ const Sidebar = ({ isOpen, onClose }) => {
             to="/chat"
             className="nav-link text-white d-flex align-items-center"
             onClick={onClose}
-
           >
-            <i className="bi bi-mortarboard-fill fs-3 text-white"></i>
-          </div>
+            <i className="bi bi-chat-text me-2 fs-5"></i>
+            {isOpen && <span>Chat with teacher</span>}
+          </NavLink>
         </div>
-
-
-        <ul className="nav nav-pills flex-column mb-auto">
-          {menuItems.map((item, idx) => (
-            <li className="nav-item mb-2" key={idx}>
-              <NavLink
-                to={item.path}
-                className="nav-link text-white d-flex align-items-center"
-                onClick={onClose} // Optionally close sidebar on click
-              >
-                <i className={`bi ${item.icon} me-2`}></i>
-                {item.label}
-              </NavLink>
-            </li>
-          ))}
-        </ul>
-
-        <div className="mt-auto pt-4 border-top">
 
         {/* Logout */}
         <div style={{ paddingBottom: "20px" }}>
-
           <NavLink
-            to="/"
+            to="/logout"
             className="nav-link text-white d-flex align-items-center"
             onClick={onClose}
           >
-            <i className="bi bi-box-arrow-right me-2"></i>
-            Logout
+            <i className="bi bi-box-arrow-right me-2 fs-5"></i>
+            {isOpen && <span>Logout</span>}
           </NavLink>
         </div>
       </div>

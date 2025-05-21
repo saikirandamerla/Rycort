@@ -19,7 +19,7 @@ function LoginPage() {
     e.preventDefault();
 
     if (!identifier || !password) {
-      setError('Please enter both username and password.');
+      setError('Please enter both email/admission number and password.');
       return;
     }
 
@@ -186,7 +186,7 @@ function LoginPage() {
           <PersonOutlineIcon style={iconStyle} />
           <input
             type="text"
-            placeholder="Enter your Username"
+            placeholder="Enter your Email or Admission Number"
             value={identifier}
             onChange={(e) => setIdentifier(e.target.value)}
             style={inputStyle}
