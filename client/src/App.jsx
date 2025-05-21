@@ -1,28 +1,21 @@
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 
-import HomePage from "./pages/homepage";
+
 import LoginPage from "./pages/login";
 import StudentDashboard from "./pages/student-dashboard";
 import TeacherDashboard from "./pages/teacher-dashboard";
 import AdminDashboard from "./pages/admin-dashboard";
-import DailyTask from './pages/dailyTask';
 import AttadancePage from "./pages/AttadancePage";
 import SubjectPage from "./pages/SubjectPage";
 import TeacherInfo from "./pages/Teacher-info";
+import ChatUI from './pages/Chat';
+import PaymentInfo from './pages/paymentmethod';
 
 
 function App() {
   const router = createBrowserRouter([
     {
       path: '/',
-      element: <HomePage/>,
-    },
-    {
-      path: '/',
-      element: <StudentDashboard/>,
-    },
-    {
-      path: '/login',
       element: <LoginPage />,
     },
     {
@@ -47,9 +40,17 @@ function App() {
       element: <AttadancePage />,
     },
     {
+      path: '/chat',
+      element: <ChatUI />,
+    },
+    {
+      path: '/payment-info',
+      element: <PaymentInfo />,
+    },
+    {
       path: '/dailytask',
       element: <DailyTask/>
-    },
+    }
   ]);
 
   return (

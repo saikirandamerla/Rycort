@@ -1,10 +1,12 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import bannerImg from '../assets/banner.png';
 import physicsImg from '../assets/avatar/Physics.png';
 import Mathsimg from '../assets/avatar/Maths.png';
 import BiologyImg from '../assets/avatar/Biology.png';
 import englishImg from '../assets/avatar/English.png';
+import Sidebar from '../components/SideBar'; // Sidebar supports hover-expand
+
 const teachers = [
   {
     id: 123,
@@ -50,11 +52,15 @@ const TeacherCard = ({ teacher }) => {
   const handleViewMore = () => {
     navigate(`/teacher/${teacher.id}`);
   };
+
   return (
     <div className="col-md-4 mb-4">
       <div
         className="card shadow-sm h-100 border-0"
-        style={{  background: 'linear-gradient(to bottom,rgb(195, 225, 252), #ffffff)', borderRadius: '12px' }}
+        style={{
+          background: 'linear-gradient(to bottom,rgb(195, 225, 252), #ffffff)',
+          borderRadius: '12px',
+        }}
       >
         <div className="card-body d-flex align-items-center">
           <img
@@ -64,7 +70,7 @@ const TeacherCard = ({ teacher }) => {
             width="70"
             height="70"
           />
-          <div style={{fontFamily: 'Sora',}}>
+          <div style={{ fontFamily: 'Sora' }}>
             <h5 className="mb-1 fw-semibold">{teacher.name}</h5>
             <p className="mb-1 text-muted">{teacher.subject}</p>
             <button
@@ -89,6 +95,7 @@ const TeacherGrid = () => (
     </div>
   </div>
 );
+
 const Banner = () => (
   <div className="container mb-4">
     <img
@@ -99,16 +106,31 @@ const Banner = () => (
     />
   </div>
 );
-const HomePage = () => {
-  return (
-    <div className="bg-light min-vh-100 py-4">
-      <div className="container text-start mb-4">
 
-        <h2 className="fw-bold" style={{fontFamily: 'Solway'}}>St. Mary Sabastian International School</h2>
+const HomePage = () => {
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false); // Sidebar hover state
+
+  return (
+    <div className="d-flex">
+      <Sidebar isOpen={isSidebarOpen} setIsOpen={setIsSidebarOpen} />
+
+      <div
+        className="flex-grow-1 bg-light min-vh-100"
+        style={{
+          marginLeft: isSidebarOpen ? "250px" : "70px",
+          transition: "margin 0.3s ease-in-out",
+        }}
+      >
+        <div className="container text-start pt-4 px-4">
+          <h2 className="fw-bold mb-4" style={{ fontFamily: 'Solway' }}>
+            St. Mary Sabastian International School
+          </h2>
+          <Banner />
+          <TeacherGrid />
+        </div>
       </div>
-      <Banner />
-      <TeacherGrid />
     </div>
   );
 };
+
 export default HomePage;
