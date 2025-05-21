@@ -9,6 +9,7 @@ import AttadancePage from "./pages/AttadancePage";
 import SubjectPage from "./pages/SubjectPage";
 import TeacherInfo from "./pages/Teacher-info";
 import ChatUI from './pages/Chat';
+import PaymentInfo from './pages/paymentmethod';
 
 
 function App() {
@@ -42,6 +43,14 @@ function App() {
       path: '/chat',
       element: <ChatUI />,
     },
+    {
+      path: '/payment-info',
+      element: <PaymentInfo />,
+    },
+    {
+      path: '/dailytask',
+      element: <DailyTask/>
+    }
   ]);
 
   return (
