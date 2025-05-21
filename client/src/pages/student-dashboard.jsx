@@ -201,7 +201,7 @@ function StudentDashboard() {
         <div className="row text-center mb-4">
           {subjects.slice(0, showAllSubjects ? subjects.length : 3).map((subject, index) => (
             <div className="col-3" key={index}>
-              <button className="btn w-100 h-100 py-4 shadow-sm rounded" style={{ backgroundColor: "white" }} onClick={() => window.location.href = `/subject/${subject}`}>
+              <button className="btn w-100 h-100 py-4 shadow-sm rounded" style={{ backgroundColor: "white" }}>
                 <img src={subjectImages[subject]} alt={subject} style={{ width: "80px", height: "80px", objectFit: "contain" }} />
                 <div className="mt-2 fw-bold" style={{fontFamily: "Soro"}}>{subject}</div>
               </button>
