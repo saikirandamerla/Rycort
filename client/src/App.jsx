@@ -43,10 +43,6 @@ function App() {
       path: '/chat',
       element: <ChatUI />,
     },
-    {
-      path: '/payment-info',
-      element: <PaymentInfo />,
-    },
   ]);
 
   return (
