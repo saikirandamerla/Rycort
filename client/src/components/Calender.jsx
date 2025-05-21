@@ -37,37 +37,37 @@ function Calendar({ onDateSelect }) {
     <div
       style={{
         background: "linear-gradient(135deg,rgba(29, 165, 173, 1),rgb(126, 94, 140))",
-        padding: "1px",
-        borderRadius: "10px",
-        width: "100%",
-        margin: 0,
-        border: 0,
+        padding: "2px",
+        borderRadius: "16px",
+        width: "fit-conten",
+        margin: "auto",
+        border: "2px",
       }}
     >
       <div
-        className="p-1"
+        className="p-3"
         style={{
-          backgroundColor: "#f0f0f0",
-          borderRadius: "8px"
+          backgroundColor: "#f0f0f0", // light gray background
+          borderRadius: "13px"
         }}
       >
-        <div className="d-flex justify-content-between align-items-center mb-1 px-1" style={{ fontSize: '0.8rem' }}>
-          <button className="btn btn-sm text-secondary" style={{ fontSize: "1rem", padding: '0 4px' }} onClick={handlePrevMonth}>‹</button>
-          <span className="mb-0 fw-bold text-dark" style={{ fontSize: '0.9rem' }}>
+        <div className="d-flex justify-content-between align-items-center mb-3 px-2">
+          <button className="btn btn-sm text-secondary" style={{ fontSize: "1.25rem" }} onClick={handlePrevMonth}>‹</button>
+          <h6 className="mb-0 fw-bold text-dark">
             {monthNames[month]} {year}
-          </span>
-          <button className="btn btn-sm text-secondary" style={{ fontSize: "1rem", padding: '0 4px' }} onClick={handleNextMonth}>›</button>
+          </h6>
+          <button className="btn btn-sm text-secondary" style={{ fontSize: "1.25rem" }} onClick={handleNextMonth}>›</button>
         </div>
 
-        <div className="d-flex flex-wrap text-center" style={{ fontSize: '0.8rem' }}>
+        <div className="d-flex flex-wrap text-center">
           {["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"].map((d, i) => (
-            <div key={i} className="fw-semibold text-secondary" style={{ width: "14.28%", padding: "2px 0" }}>
+            <div key={i} className="fw-semibold text-secondary" style={{ width: "14.28%", padding: "6px 0" }}>
               {d}
             </div>
           ))}
 
           {[...Array(startDay)].map((_, i) => (
-            <div key={`empty-${i}`} style={{ width: "14.28%", height: "22px" }}></div>
+            <div key={`empty-${i}`} style={{ width: "14.28%", height: "40px" }}></div>
           ))}
 
           {[...Array(daysInMonth)].map((_, i) => {
@@ -84,16 +84,13 @@ function Calendar({ onDateSelect }) {
                 style={{
                   width: "14.28%",
                   cursor: "pointer",
-                  padding: "4px 0",
+                  padding: "10px 0",
                   fontWeight: isSelected ? "bold" : "normal",
-                  fontSize: "0.85rem",
+                  fontSize: "1rem",
                   backgroundColor: isSelected ? "#007bff" : "transparent",
                   color: isSelected ? "#fff" : "#333",
                   borderRadius: isSelected ? "50%" : "0",
-                  transition: "all 0.2s ease",
-                  height: '22px',
-                  lineHeight: '14px',
-                  margin: 0
+                  transition: "all 0.2s ease"
                 }}
               >
                 {dayNum}

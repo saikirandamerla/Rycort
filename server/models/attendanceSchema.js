@@ -1,22 +1,8 @@
-// server/models/attendanceSchema.js
 const mongoose = require('mongoose');
-
-const attendanceRecordSchema = new mongoose.Schema({
-  studentId: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'Student',
-    required: true
-  },
-  status: {
-    type: String,
-    enum: ['present', 'absent'],
-    required: true
-  }
-});
 
 const attendanceSchema = new mongoose.Schema({
   date: {
-    type: String, // Consider Date type if you want date operations
+    type: String,
     required: true
   },
   classId: {
@@ -29,9 +15,18 @@ const attendanceSchema = new mongoose.Schema({
     ref: 'Teacher',
     required: true
   },
-  records: [attendanceRecordSchema]
-}, {
-  timestamps: true
+  records: [{
+    studentId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Student',
+      required: true
+    },
+    status: {
+      type: String,
+      enum: ['present', 'absent'],
+      required: true
+    }
+  }]
 });
 
 module.exports = mongoose.model('Attendance', attendanceSchema);
