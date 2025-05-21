@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const School = require('./models/schoolSchema');
+const School = require('../models/schoolSchema');
 
 // Utility function to generate schoolId from school name
 const generateSchoolId = async (name) => {

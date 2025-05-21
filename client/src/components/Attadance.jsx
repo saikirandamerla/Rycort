@@ -10,7 +10,7 @@ function AttendanceChart({ attendancePercent = 80 }) {
       className="bg-white rounded shadow-sm p-3"
       style={{ width: "278px", height: "218px", borderRadius: "16px" }}
     >
-      <div className="d-flex justify-content-between align-items-center mb-2">
+      <div className="d-flex justify-content-end align-items-center mb-2">
         <div className="d-flex justify-content-end align-items-center gap-1" data-bs-toggle="modal" data-bs-target="#dotsModal" role="button">
         <span className="bg-secondary rounded-circle" style={{ width: "5px", height: "5px" }}></span>
         <span className="bg-secondary rounded-circle" style={{ width: "5px", height: "5px" }}></span>
