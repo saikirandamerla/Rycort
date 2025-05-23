@@ -6,7 +6,7 @@ const Sidebar = ({ isOpen, onClose }) => {
   { icon: "bi-calendar-check", label: "Attendance", path: "/attendance" },         // Attendance check
   { icon: "bi-journal-text", label: "Examination", path: "/examination" },         // Exam-related journal
   { icon: "bi-bar-chart-line", label: "Result", path: "/result" },                 // Result bar chart
-  { icon: "bi-book", label: "Dairy", path: "/dairy" },                              // Diary/book icon
+  { icon: "bi-book", label: "Dairy", path: "/dailytask" },                              // Diary/book icon
   { icon: "bi-person-lines-fill", label: "Teacher info", path: "/Teacher-info" },  // Info/person icon
   { icon: "bi-cash-stack", label: "Payment info", path: "/payment-info" },         // Stack of cash
   { icon: "bi-chat-dots", label: "Chat with teacher", path: "/chat" },             // Chat bubble with dots

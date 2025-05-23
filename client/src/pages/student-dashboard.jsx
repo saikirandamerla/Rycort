@@ -1,31 +1,41 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
+
+// Assets
 import chemistryImg from '../assets/subject/Chemistry.png';
 import mathsImg from '../assets/subject/Maths.png';
 import physicsImg from '../assets/subject/Physics.png';
 import Profile from '../assets/profile.png';
+import welcomeBanner from '../assets/welcome_banner.png';
+
+// Components
 import Calendar from '../components/Calender';
 import Attendance from '../components/Attadance';
-import welcomeBanner from '../assets/welcome_banner.png';
 import Sidebar from "../components/navbar";
 import TimeTable from '../components/TimeTable';
+import ChatWidget from '../components/ChatWidget';
+
 import { BsChevronDown } from 'react-icons/bs';
-import ChatWidget from '../components/ChatWidget'; // 👈 Make sure path is correct
 
 function StudentDashboard() {
+  const navigate = useNavigate();
+
+  // State management
   const today = new Date();
   const [currentDate, setCurrentDate] = useState(today);
   const [selectedDate, setSelectedDate] = useState(today);
   const [showAllSubjects, setShowAllSubjects] = useState(false);
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [showProfileSidebar, setShowProfileSidebar] = useState(false);
-  const [isChatOpen, setIsChatOpen] = useState(false); // 👈 Chat toggle state
+  const [isChatOpen, setIsChatOpen] = useState(false);
 
+  // Constants
   const userName = "Love Quin";
-
   const subjects = ['Chemistry', 'Maths', 'Physics'];
   const subjectImages = { Chemistry: chemistryImg, Maths: mathsImg, Physics: physicsImg };
 
+  // Sidebar toggles
   const toggleSidebar = () => {
     setIsSidebarOpen(prev => {
       if (!prev) setShowProfileSidebar(false);
@@ -40,10 +50,12 @@ function StudentDashboard() {
     });
   };
 
-  const handleViewAllClick = () => setShowAllSubjects(!showAllSubjects);
+  // Others
+  const handleViewAllClick = () => setShowAllSubjects(prev => !prev);
+  const toggleChat = () => setIsChatOpen(prev => !prev);
 
-  const toggleChat = () => {
-    setIsChatOpen(!isChatOpen);
+  const handleSubjectClick = (subject) => {
+    navigate(`/subject/${subject.toLowerCase()}`);
   };
 
   return (
@@ -63,22 +75,11 @@ function StudentDashboard() {
           <div style={{ position: 'relative', height: '100%' }}>
             <button
               onClick={toggleSidebar}
-              style={{
-                position: 'absolute',
-                top: '10px',
-                right: '10px',
-                background: 'transparent',
-                border: 'none',
-                fontSize: '1.8rem',
-                cursor: 'pointer',
-                zIndex: 1001,
-                color: '#333'
-              }}
+              className="btn-close position-absolute"
+              style={{ top: '10px', right: '10px', fontSize: '1.8rem', zIndex: 1001 }}
               aria-label="Close Sidebar"
-            >
-              &times;
-            </button>
-            <div style={{ marginTop: '40px', }}>
+            />
+            <div style={{ marginTop: '40px' }}>
               <Sidebar isOpen={isSidebarOpen} />
             </div>
           </div>
@@ -86,40 +87,33 @@ function StudentDashboard() {
       </div>
 
       {/* Main Dashboard */}
-      <div
-        className="container-fluid dashboard p-4"
-        style={{
-          backgroundColor: '#f5faff',
-          marginLeft: isSidebarOpen ? '250px' : '0',
-          transition: 'margin-left 0.3s',
-          width: '100%',
-          height: '100vh',
-          overflowY: 'auto',
-          position: 'relative'
-        }}
-      >
+      <div className="container-fluid dashboard p-4" style={{
+        backgroundColor: '#f5faff',
+        marginLeft: isSidebarOpen ? '250px' : '0',
+        transition: 'margin-left 0.3s',
+        width: '100%',
+        height: '100vh',
+        overflowY: 'auto',
+        position: 'relative'
+      }}>
+        {/* Header */}
         <div className="mb-3">
           <button className="btn text-dark" onClick={toggleSidebar}>
             <i className="bi bi-list fs-3"></i>
           </button>
         </div>
 
+        {/* Notification & Profile */}
         <div className="position-absolute" style={{ top: "20px", right: "20px", zIndex: 1000 }}>
           <i className="bi bi-bell-fill text-dark" style={{ fontSize: "1.5rem", cursor: "pointer" }}></i>
         </div>
 
         {!showProfileSidebar && (
-          <div
-            className="d-flex align-items-center position-absolute"
+          <div className="d-flex align-items-center position-absolute"
             onClick={toggleProfileSidebar}
-            style={{
-              top: "20px",
-              right: "70px",
-              cursor: 'pointer',
-              zIndex: 1001
-            }}
+            style={{ top: "20px", right: "70px", cursor: 'pointer', zIndex: 1001 }}
           >
-            <img src={Profile} alt="avatar" className="rounded-circle me-2" style={{ width: "45px", height: "45px", objectFit: "cover" }} />
+            <img src={Profile} alt="avatar" className="rounded-circle me-2" style={{ width: "45px", height: "45px" }} />
             <div>
               <strong style={{ fontSize: "0.9rem" }}>{userName}</strong>
               <p className="text-muted mb-0" style={{ fontSize: "0.75rem" }}>2nd Class</p>
@@ -128,6 +122,7 @@ function StudentDashboard() {
           </div>
         )}
 
+        {/* Profile Sidebar */}
         {showProfileSidebar && (
           <div className="shadow bg-primary rounded text-white p-4"
             style={{
@@ -141,15 +136,13 @@ function StudentDashboard() {
               transition: 'transform 0.3s ease-in-out'
             }}>
             <div className="text-center">
-              <img src={Profile} alt="avatar" style={{
-                width: "80px", height: "80px", objectFit: "cover", borderRadius: "20px", marginBottom: "10px"
-              }} />
+              <img src={Profile} alt="avatar" className="rounded mb-2" style={{ width: "80px", height: "80px" }} />
               <h5 className="fw-bold mb-1">{userName}</h5>
               <p className="mb-1">2nd Class</p>
               <p className="fw-bold">ID: 1824411</p>
             </div>
             <div className="mt-4">
-              <h6 className="text-white mb-2">Daily notice <a href ="#" className="float-end text-white-50">view all</a></h6>
+              <h6 className="text-white mb-2">Daily notice <a href="#" className="float-end text-white-50">view all</a></h6>
               <div className="bg-white text-dark rounded p-2 mb-3">
                 <strong>Payment due</strong>
                 <p style={{ fontSize: "0.75rem" }}>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
@@ -176,17 +169,17 @@ function StudentDashboard() {
               }}>
               <div>
                 <p style={{ fontSize: '0.9rem', marginBottom: '0.5rem' }}>
-                  {new Date().toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}
+                  {today.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}
                 </p>
-                <h3 className="fw-bold mb-1" style={{ fontSize: "55px" }}>Welcome back, {userName}!</h3>
-                <p className="mb-0" style={{ fontSize: "15px" }}>Always stay updated in your student portal</p>
+                <h3 className="fw-bold mb-1" style={{ fontSize: "2.5rem" }}>Welcome back, {userName}!</h3>
+                <p className="mb-0" style={{ fontSize: "0.9rem" }}>Always stay updated in your student portal</p>
               </div>
-              <img src={welcomeBanner} alt="Welcome Illustration" style={{ maxHeight: '250px', objectFit: 'contain' }} />
+              <img src={welcomeBanner} alt="Welcome" style={{ maxHeight: '200px', objectFit: 'contain' }} />
             </div>
           </div>
         </div>
 
-        {/* Subject Cards */}
+        {/* Subjects and Daily Task */}
         <div className="row align-items-end mb-2">
           <div className="col">
             <h1 style={{ fontSize: "1.2rem", fontWeight: "bold" }}>Diary</h1>
@@ -201,9 +194,13 @@ function StudentDashboard() {
         <div className="row text-center mb-4">
           {subjects.slice(0, showAllSubjects ? subjects.length : 3).map((subject, index) => (
             <div className="col-3" key={index}>
-              <button className="btn w-100 h-100 py-4 shadow-sm rounded" style={{ backgroundColor: "white" }} onClick={() => window.location.href = `/subject/${subject}`}>
-                <img src={subjectImages[subject]} alt={subject} style={{ width: "80px", height: "80px", objectFit: "contain" }} />
-                <div className="mt-2 fw-bold" style={{fontFamily: "Soro"}}>{subject}</div>
+              <button
+                className="btn w-100 h-100 py-4 shadow-sm rounded"
+                style={{ backgroundColor: "white" }}
+                onClick={() => handleSubjectClick(subject)}
+              >
+                <img src={subjectImages[subject]} alt={subject} style={{ width: "80px", height: "80px" }} />
+                <div className="mt-2 fw-bold">{subject}</div>
               </button>
             </div>
           ))}
@@ -219,49 +216,47 @@ function StudentDashboard() {
                 <i className="bi bi-clipboard-check fs-4 me-2"></i>
                 <h6 className="fw-bold mb-0">Daily Task</h6>
               </div>
-              <a href="/dailytask" className="btn btn-light text-primary fw-bold px-3 py-1 rounded-pill">
+              <button
+                className="btn btn-light text-primary fw-bold px-3 py-1 rounded-pill"
+                onClick={() => navigate('/dailytask')}
+              >
                 View
-              </a>
+              </button>
             </div>
           </div>
         </div>
 
         {/* Calendar, Attendance, Time Table */}
         <div className="row">
-          <div className="col-12 col-md-4 mb-4 d-flex">
-            <div className="flex-fill p-3">
-              <h6 className="fw-bold mb-3">Calendar</h6>
-              <Calendar
-                currentDate={currentDate}
-                setCurrentDate={setCurrentDate}
-                selectedDate={selectedDate}
-                setSelectedDate={setSelectedDate}
-              />
-            </div>
+          <div className="col-12 col-md-4 mb-4">
+            <h6 className="fw-bold mb-3">Calendar</h6>
+            <Calendar
+              currentDate={currentDate}
+              setCurrentDate={setCurrentDate}
+              selectedDate={selectedDate}
+              setSelectedDate={setSelectedDate}
+            />
           </div>
-          <div className="col-12 col-md-4 mb-4 d-flex">
-            <div className="flex-fill p-3">
-              <h6 className="fw-bold mb-3">Attendance</h6>
-              <Attendance selectedDate={selectedDate} />
-            </div>
+          <div className="col-12 col-md-4 mb-4">
+            <h6 className="fw-bold mb-3">Attendance</h6>
+            <Attendance selectedDate={selectedDate} />
           </div>
-          <div className="col-12 col-md-4 mb-4 d-flex">
-            <div className=" flex-fill p-3">
-              <h6 className="fw-bold mb-3">Time Table</h6>
-              <TimeTable currentDate={currentDate} />
-            </div>
+          <div className="col-12 col-md-4 mb-4">
+            <h6 className="fw-bold mb-3">Time Table</h6>
+            <TimeTable currentDate={currentDate} />
           </div>
         </div>
 
+        {/* Footer */}
         <footer className="text-center mt-4">
           <p className="text-muted" style={{ fontSize: "0.8rem" }}>© 2025 Student Portal. All rights reserved.</p>
         </footer>
 
-        {/* Floating Chat Icon and Chat Widget */}
+        {/* Chat Button */}
         <button
           onClick={toggleChat}
+          className="position-fixed"
           style={{
-            position: 'fixed',
             bottom: '20px',
             right: '20px',
             zIndex: 1050,
@@ -272,19 +267,13 @@ function StudentDashboard() {
             width: '60px',
             height: '60px',
             boxShadow: '0 4px 8px rgba(0, 0, 0, 0.2)',
-            cursor: 'pointer',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
             fontSize: '1.5rem'
           }}
-          aria-label="Open Chat"
         >
           <i className="bi bi-chat-dots-fill"></i>
         </button>
 
         {isChatOpen && <ChatWidget onClose={toggleChat} />}
-
       </div>
     </div>
   );
