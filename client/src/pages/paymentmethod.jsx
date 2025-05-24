@@ -1,9 +1,10 @@
 import React, { useState } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
+import "bootstrap-icons/font/bootstrap-icons.css";
 import { FaDownload } from "react-icons/fa";
 import profile from "../assets/profile.png";
 import carditcard from "../assets/card.png";
-import Sidebar from "../components/SideBar"; // Adjust path if needed
+import Sidebar from "../components/SideBar";
 
 const PaymentInfo = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
@@ -23,7 +24,7 @@ const PaymentInfo = () => {
       >
         <div className="container mt-4 sora-font">
           {/* Header */}
-          <div className="d-flex justify-content-between align-items-center mb-4">
+          <div className="d-flex justify-content-between align-items-center mb-3">
             <h2>Payment Information</h2>
             <div className="d-flex align-items-center">
               <img
@@ -34,6 +35,43 @@ const PaymentInfo = () => {
               <div>
                 <div className="fw-bold">Love Quin</div>
                 <div className="text-muted">2nd Class</div>
+              </div>
+            </div>
+          </div>
+
+          {/* Summary Cards */}
+          <div className="row mb-4">
+            <div className="col-md-4 mb-3">
+              <div className="card summary-card text-center p-3 h-100">
+                <div className="d-flex align-items-center justify-content-center mb-2">
+                  <i className="bi bi-cash-stack text-primary fs-4 me-2"></i>
+                  <div>
+                    <div className="text-muted small">Total amount</div>
+                    <div className="fw-bold">Rs.50,000</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div className="col-md-4 mb-3">
+              <div className="card summary-card text-center p-3 h-100">
+                <div className="d-flex align-items-center justify-content-center mb-2">
+                  <i className="bi bi-calendar3 text-primary fs-4 me-2"></i>
+                  <div>
+                    <div className="text-muted small">Due date</div>
+                    <div className="fw-bold">May 31, 2025</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div className="col-md-4 mb-3">
+              <div className="card summary-card text-center p-3 h-100">
+                <div className="d-flex align-items-center justify-content-center mb-2">
+                  <i className="bi bi-check2-circle text-primary fs-4 me-2"></i>
+                  <div>
+                    <div className="text-muted small">Payment status</div>
+                    <div className="fw-bold text-warning">Pending</div>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
@@ -97,8 +135,8 @@ const PaymentInfo = () => {
             </div>
           </div>
 
-          {/* Download receipt button */}
-          <div className="d-flex justify-content-end mb-4">
+          {/* Download Receipt - moved up */}
+          <div className="d-flex justify-content-end mb-4" style={{ marginTop: "-90px" }}>
             <div className="col-md-4 p-3">
               <h5 className="fw-semibold mb-2">Download Receipt</h5>
               <button className="btn btn-primary d-flex align-items-center">
@@ -109,8 +147,7 @@ const PaymentInfo = () => {
           </div>
 
           {/* Bottom row: Upcoming 2, Card, Payment method */}
-          <div className="row align-items-start">
-            {/* Upcoming Payments 2 */}
+          <div className="row align-items-start" style={{ marginTop: "-20px" }}>
             <div className="col-md-4 mb-3">
               <h5 className="fw-semibold mb-2">Upcoming Payments</h5>
               <div className="p-3 rounded gradient-box">
@@ -131,7 +168,6 @@ const PaymentInfo = () => {
               </div>
             </div>
 
-            {/* Credit Card Image */}
             <div className="col-md-4 mb-3 text-center d-flex align-items-start justify-content-center">
               <img
                 src={carditcard}
@@ -146,7 +182,6 @@ const PaymentInfo = () => {
               />
             </div>
 
-            {/* Payment Methods */}
             <div className="col-md-4 mb-3 text-center p-3 rounded gradient-box">
               <h6 className="text-muted mb-1">Payment methods</h6>
               <a href="#" className="text-primary text-decoration-none">
@@ -155,7 +190,7 @@ const PaymentInfo = () => {
             </div>
           </div>
 
-          {/* Styles */}
+          {/* Custom Styles */}
           <style>{`
             .sora-font {
               font-family: 'Sora', sans-serif;
@@ -206,6 +241,13 @@ const PaymentInfo = () => {
             .gradient-box {
               background: linear-gradient(to bottom, #e0f0ff, #ffffff);
               border-radius: 1rem;
+            }
+
+            .summary-card {
+              border: 1px solid #e0e0e0;
+              border-radius: 12px;
+              background: linear-gradient(to bottom right, #f4faff, #ffffff);
+              box-shadow: 0 1px 3px rgba(0,0,0,0.05);
             }
           `}</style>
         </div>
